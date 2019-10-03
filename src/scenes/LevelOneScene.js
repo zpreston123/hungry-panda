@@ -6,6 +6,6 @@ export default class Level01 extends Phaser.Scene {
 	}
 
 	create() {
-		this.camera.setBackgroundColor('seagreen');
+		this.cameras.main.setBackgroundColor('#2E8B57'); // seagreen
 	}
 }

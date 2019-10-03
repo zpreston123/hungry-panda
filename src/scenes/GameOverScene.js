@@ -2,10 +2,10 @@ import Phaser from 'phaser';
 
 export default class GameOverScene extends Phaser.Scene {
 	constructor() {
-		super('Game Over');
+		super('End');
 	}
 
 	preload() {
-		this.load.image('game-over', 'assets/end.png');
+		this.load.image('game-over', '../assets/images/end.png');
 	}
 }
