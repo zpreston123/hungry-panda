@@ -11,10 +11,7 @@ export default class StartScene extends Phaser.Scene {
 	}
 
 	create() {
-		var width = this.cameras.main.width;
-		var height = this.cameras.main.height;
-
-		this.add.image(width / 2, height / 2, 'start');
+		this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'start');
 
         this.input.once('pointerdown', function (event) {
             this.scene.start('Level 01');
