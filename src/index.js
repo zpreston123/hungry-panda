@@ -5,7 +5,7 @@ import GameOverScene from './scenes/GameOverScene';
 import LevelOneScene from './scenes/LevelOneScene';
 
 class Game extends Phaser.Game {
-	constructor() {
+	constructor(config) {
 		super(config);
 		this.scene.add('Start', StartScene);
 		this.scene.add('Level 01', LevelOneScene);
@@ -16,5 +16,16 @@ class Game extends Phaser.Game {
 }
 
 window.onload = function () {
-	window.game = new Game();
+	// center and scale game for mobile devices
+ 	if (screen.width < 600){
+		config.scale = {
+	  		mode: Phaser.Scale.FIT,
+	  		autoCenter: Phaser.Scale.CENTER_BOTH,
+	  		parent: 'phaser-example',
+	  		width: 500,
+	  		height: 400
+		};
+	}
+
+	window.game = new Game(config);
 };
