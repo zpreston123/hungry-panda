@@ -1,5 +1,9 @@
 import Phaser from 'phaser';
 import config from '../config/config';
+import fruitSound from '../assets/sounds/se2.wav';
+import bombSound from '../assets/sounds/bomb1.wav';
+import clearSound from '../assets/sounds/se6.wav';
+import gameOverSound from '../assets/sounds/se7.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 
 export default class Level01 extends Phaser.Scene {
@@ -8,6 +12,10 @@ export default class Level01 extends Phaser.Scene {
 	}
 
 	preload() {
+		this.load.audio('fruit-sound', fruitSound);
+		this.load.audio('bomb-sound', bombSound);
+		this.load.audio('clear-sound', clearSound);
+		this.load.audio('game-over-sound', gameOverSound);
         this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
 	}
 
