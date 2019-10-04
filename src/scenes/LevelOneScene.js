@@ -16,7 +16,7 @@ export default class Level01 extends Phaser.Scene {
 		this.load.audio('bomb-sound', bombSound);
 		this.load.audio('clear-sound', clearSound);
 		this.load.audio('game-over-sound', gameOverSound);
-        this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
+		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
 	}
 
 	create() {
@@ -24,7 +24,7 @@ export default class Level01 extends Phaser.Scene {
 
 		this.player = this.physics.add.sprite(config.width / 2, config.height / 2, 'icons', 21);
 		this.player.setScale(2);
-        this.player.speed = 4;
+		this.player.speed = 4;
 		this.player.setCollideWorldBounds(true);
 
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -35,20 +35,20 @@ export default class Level01 extends Phaser.Scene {
 
 		if (this.cursorKeys.left.isDown)
 		{
-		    this.player.setVelocityX(-300);
+			this.player.setVelocityX(-300);
 		}
 		else if (this.cursorKeys.right.isDown)
 		{
-		    this.player.setVelocityX(300);
+			this.player.setVelocityX(300);
 		}
 
 		if (this.cursorKeys.up.isDown)
 		{
-		    this.player.setVelocityY(-300);
+			this.player.setVelocityY(-300);
 		}
 		else if (this.cursorKeys.down.isDown)
 		{
-		    this.player.setVelocityY(300);
+			this.player.setVelocityY(300);
 		}
 	}
 }
