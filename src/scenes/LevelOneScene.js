@@ -28,6 +28,16 @@ export default class Level01 extends Phaser.Scene {
 		this.player.setCollideWorldBounds(true);
 
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+		// make player draggable on mobile devices
+		if (config.scale) {
+			this.player.setInteractive();
+			this.input.setDraggable(this.player);
+			this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+				gameObject.x = dragX;
+				gameObject.y = dragY;
+			});
+		}
 	}
 
 	update() {
