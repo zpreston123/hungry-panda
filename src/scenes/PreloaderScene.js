@@ -15,7 +15,7 @@ export default class PreloaderScene extends Phaser.Scene {
 		this.load.audio('bomb-sound', bombSound);
 		this.load.audio('clear-sound', clearSound);
 		this.load.audio('game-over-sound', gameOverSound);
-		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 103);
+		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
 	}
 
 	create() {
