@@ -47,7 +47,7 @@ export default class Level01 extends Phaser.Scene {
 		this.scoreLabel = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
 
 		// add time
-	    this.initialTime = 20000;
+		this.initialTime = 20000;
 		this.timeLabel = this.add.text(16, 50, 'Time: 20', { fontSize: '32px', fill: '#fff' });
 	}
 
