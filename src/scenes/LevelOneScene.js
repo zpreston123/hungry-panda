@@ -20,13 +20,16 @@ export default class Level01 extends Phaser.Scene {
 	}
 
 	create() {
+		// set background color
 		this.cameras.main.setBackgroundColor('#2E8B57'); // seagreen
 
+		// create player
 		this.player = this.physics.add.sprite(config.width / 2, config.height / 2, 'icons', 21);
 		this.player.setScale(2);
 		this.player.speed = 4;
 		this.player.setCollideWorldBounds(true);
 
+		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
 
 		// make player draggable on mobile devices
@@ -38,6 +41,14 @@ export default class Level01 extends Phaser.Scene {
 				gameObject.y = dragY;
 			});
 		}
+
+		// add score
+		this.score = 0;
+		this.scoreLabel = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+
+		// add time
+	    this.initialTime = 20000;
+		this.timeLabel = this.add.text(16, 50, 'Time: 20', { fontSize: '32px', fill: '#fff' });
 	}
 
 	update() {
