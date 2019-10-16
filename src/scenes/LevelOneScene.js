@@ -49,6 +49,13 @@ export default class Level01 extends Phaser.Scene {
 		// add time
 		this.initialTime = 20000;
 		this.timeLabel = this.add.text(16, 50, 'Time: 20', { fontSize: '32px', fill: '#fff' });
+
+		// create array of fruit frames
+        [15, 16, 17, 18, 27, 28, 29, 32].forEach(function (frame) {
+            this.fruit = this.physics.add.sprite(this.range(10, 310) - config.width, this.range(70, 280) - config.height, 'icons', frame);
+	        this.fruit.scaleX = -1;
+			this.fruit.setCollideWorldBounds(true);
+        });
 	}
 
 	update() {
