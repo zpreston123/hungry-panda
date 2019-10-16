@@ -79,4 +79,14 @@ export default class Level01 extends Phaser.Scene {
 			this.player.setVelocityY(300);
 		}
 	}
+
+	/**
+	 * Return random number between an input range.
+	 * @param  {Number} min
+	 * @param  {Number} max
+	 * @return {Number}
+	 */
+	range(min, max) {
+	    return Math.floor(Math.random() * (max + 1 - min) + min);
+	}
 }
