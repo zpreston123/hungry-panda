@@ -29,13 +29,20 @@ export default class Level01 extends Phaser.Scene {
 		this.player.speed = 4;
 		this.player.setCollideWorldBounds(true);
 
-		// add random fruit 10 times
-        for (var index = 0; index < 10; index++) {
-			var fruitFrames = [15, 16, 17, 18, 27, 28, 29, 32];
-			var fruit = this.physics.add.sprite(Phaser.Math.Between(0, config.width), Phaser.Math.Between(0, config.height), 'icons', fruitFrames[Math.floor(Math.random() * fruitFrames.length)]);
-	        fruit.scaleX = -1;
-			fruit.setCollideWorldBounds(true);
-        }
+		this.fruitGroup = this.physics.add.group();
+
+		this.fruitGroup.createMultiple({
+			key: 'icons',
+			frame: [15, 16, 17, 18, 27, 28, 29, 32],
+			randomFrame: true
+		});
+
+		this.fruitGroup.children.iterate(fruit => {
+			fruit.setX(Phaser.Math.Between(0, config.width));
+			fruit.setY(Phaser.Math.Between(0, config.height));
+		});
+
+		this.physics.add.overlap(this.player, this.fruitGroup, this.removeFruit, null, this);
 
 		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -79,6 +86,10 @@ export default class Level01 extends Phaser.Scene {
 		{
 			this.player.setVelocityY(300);
 		}
+	}
+
+	removeFruit(player, fruit) {
+		fruit.disableBody(true, true);
 	}
 
 	/**
