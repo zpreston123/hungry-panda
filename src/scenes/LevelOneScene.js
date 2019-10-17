@@ -51,6 +51,28 @@ export default class Level01 extends Phaser.Scene {
 			fruit.destroy();
 		}, null, this);
 
+        // add bomb group
+        this.bombGroup = this.physics.add.group();
+        this.bombGroup.createMultiple({
+            key: 'icons',
+            frame: 24,
+            repeat: 5
+        });
+        this.bombGroup.children.iterate(bomb => {
+            bomb.setPosition(
+                Phaser.Math.Between(20, config.width-20),
+                Phaser.Math.Between(100, config.height-20)
+            );
+            bomb.setScale(1.5);
+            bomb.setCollideWorldBounds(true);
+        });
+
+        // detect collision between the player and bomb
+        this.physics.add.overlap(this.player, this.bombGroup, function (player, bomb) {
+            this.sound.add('bomb-sound').play();
+            bomb.destroy();
+        }, null, this);
+
 		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
 
