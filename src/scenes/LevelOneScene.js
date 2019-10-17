@@ -46,7 +46,10 @@ export default class Level01 extends Phaser.Scene {
 		});
 
 		// detect collision between the player and fruit
-		this.physics.add.overlap(this.player, this.fruitGroup, this.removeFruit, null, this);
+		this.physics.add.overlap(this.player, this.fruitGroup, function (player, fruit) {
+			this.sound.add('fruit-sound').play();
+			fruit.destroy();
+		}, null, this);
 
 		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -73,38 +76,14 @@ export default class Level01 extends Phaser.Scene {
 	update() {
 		this.player.setVelocity(0);
 
-		if (this.cursorKeys.left.isDown)
-		{
+		if (this.cursorKeys.left.isDown) {
 			this.player.setVelocityX(-300);
-		}
-		else if (this.cursorKeys.right.isDown)
-		{
+		} else if (this.cursorKeys.right.isDown) {
 			this.player.setVelocityX(300);
-		}
-
-		if (this.cursorKeys.up.isDown)
-		{
+		} else if (this.cursorKeys.up.isDown) {
 			this.player.setVelocityY(-300);
-		}
-		else if (this.cursorKeys.down.isDown)
-		{
+		} else if (this.cursorKeys.down.isDown) {
 			this.player.setVelocityY(300);
 		}
-	}
-
-	removeFruit(player, fruit) {
-		this.fruitSound = this.sound.add('fruit-sound');
-		this.fruitSound.play();
-		fruit.disableBody(true, true);
-	}
-
-	/**
-	 * Return random number between an input range.
-	 * @param  {Number} min
-	 * @param  {Number} max
-	 * @return {Number}
-	 */
-	range(min, max) {
-	    return Math.floor(Math.random() * (max + 1 - min) + min);
 	}
 }
