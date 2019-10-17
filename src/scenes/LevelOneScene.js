@@ -29,21 +29,23 @@ export default class Level01 extends Phaser.Scene {
 		this.player.speed = 4;
 		this.player.setCollideWorldBounds(true);
 
+		// create fruit group
 		this.fruitGroup = this.physics.add.group();
-
 		this.fruitGroup.createMultiple({
 			key: 'icons',
 			frame: [15, 16, 17, 18, 27, 28, 29, 32],
 			randomFrame: true
 		});
-
 		this.fruitGroup.children.iterate(fruit => {
-			fruit.setX(Phaser.Math.Between(0, config.width));
-			fruit.setY(Phaser.Math.Between(0, config.height));
+			fruit.setPosition(
+				Phaser.Math.Between(20, config.width-20),
+				Phaser.Math.Between(100, config.height-20)
+			);
 			fruit.setScale(1.5);
 			fruit.setCollideWorldBounds(true);
 		});
 
+		// detect collision between the player and fruit
 		this.physics.add.overlap(this.player, this.fruitGroup, this.removeFruit, null, this);
 
 		// add keyboard input detection
