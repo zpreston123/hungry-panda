@@ -40,6 +40,8 @@ export default class Level01 extends Phaser.Scene {
 		this.fruitGroup.children.iterate(fruit => {
 			fruit.setX(Phaser.Math.Between(0, config.width));
 			fruit.setY(Phaser.Math.Between(0, config.height));
+			fruit.setScale(1.5);
+			fruit.setCollideWorldBounds(true);
 		});
 
 		this.physics.add.overlap(this.player, this.fruitGroup, this.removeFruit, null, this);
@@ -89,6 +91,8 @@ export default class Level01 extends Phaser.Scene {
 	}
 
 	removeFruit(player, fruit) {
+		this.fruitSound = this.sound.add('fruit-sound');
+		this.fruitSound.play();
 		fruit.disableBody(true, true);
 	}
 
