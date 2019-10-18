@@ -3,15 +3,34 @@ import config from './config/config';
 import StartScene from './scenes/StartScene';
 import GameOverScene from './scenes/GameOverScene';
 import LevelOneScene from './scenes/LevelOneScene';
+import ClearScene from './scenes/ClearScene';
 
 class Game extends Phaser.Game {
 	constructor(config) {
 		super(config);
 		this.scene.add('Start', StartScene);
 		this.scene.add('Level 01', LevelOneScene);
+		this.scene.add('Clear', ClearScene);
 		this.scene.add('End', GameOverScene);
-
 		this.scene.start('Start');
+	}
+
+	create() {
+		window.addEventListener('resize', resize);
+		this.resize();
+	}
+
+	resize() {
+		var canvas = game.canvas, width = document.getElementsByClassName("phaser-example")[0].offsetWidth, height = window.innerHeight;
+		var wratio = width / height, ratio = canvas.width / canvas.height;
+
+		if (wratio < ratio) {
+			canvas.style.width = width + 'px';
+			canvas.style.height = (width / ratio) + 'px';
+		} else {
+			canvas.style.width = (height * ratio) + 'px';
+			canvas.style.height = height + 'px';
+		}
 	}
 }
 
