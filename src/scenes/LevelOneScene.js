@@ -69,6 +69,7 @@ export default class Level01 extends Phaser.Scene {
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, function (player, bomb) {
+            this.currentHealth--;
             this.sound.add('bomb-sound').play();
             bomb.destroy();
         }, null, this);
@@ -93,9 +94,15 @@ export default class Level01 extends Phaser.Scene {
 		// add time
 		this.initialTime = 20000;
 		this.timeLabel = this.add.text(16, 50, 'Time: 20', { fontSize: '32px', fill: '#fff' });
+
+        // add health
+        this.currentHealth = 3;
+        this.maxHealth = 3;
+        this.healthLabel = this.add.text(610, 16, 'Health: 3', { fontSize: '32px', fill: '#fff'});
 	}
 
 	update() {
+        this.healthLabel.setText('Health: ' + this.currentHealth);
 		this.player.setVelocity(0);
 
 		if (this.cursorKeys.left.isDown) {
