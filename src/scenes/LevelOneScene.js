@@ -2,8 +2,6 @@ import Phaser from 'phaser';
 import config from '../config/config';
 import fruitSound from '../assets/sounds/se2.wav';
 import bombSound from '../assets/sounds/bomb1.wav';
-import clearSound from '../assets/sounds/se6.wav';
-import gameOverSound from '../assets/sounds/se7.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 
 export default class Level01 extends Phaser.Scene {
@@ -14,8 +12,6 @@ export default class Level01 extends Phaser.Scene {
 	preload() {
 		this.load.audio('fruit-sound', fruitSound);
 		this.load.audio('bomb-sound', bombSound);
-		this.load.audio('clear-sound', clearSound);
-		this.load.audio('game-over-sound', gameOverSound);
 		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
 	}
 
@@ -99,10 +95,21 @@ export default class Level01 extends Phaser.Scene {
         this.currentHealth = 3;
         this.maxHealth = 3;
         this.healthLabel = this.add.text(610, 16, 'Health: 3', { fontSize: '32px', fill: '#fff'});
+
+        this.clearSound = this.sound.add('clear-sound');
 	}
 
 	update() {
+        if (this.currentHealth == 0) {
+            this.scene.start('Game Over');
+        }
+
+        if (this.fruitGroup.getLength() == 0) {
+        	this.scene.start('Clear');
+        }
+
         this.healthLabel.setText('Health: ' + this.currentHealth);
+
 		this.player.setVelocity(0);
 
 		if (this.cursorKeys.left.isDown) {
