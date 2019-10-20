@@ -33,6 +33,19 @@ export default class Level01 extends Phaser.Scene {
 		this.player.speed = 4;
 		this.player.setCollideWorldBounds(true);
 
+		// add keyboard input detection
+		this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+		// make player draggable on mobile devices
+		if (config.scale) {
+			this.player.setInteractive();
+			this.input.setDraggable(this.player);
+			this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+				gameObject.x = dragX;
+				gameObject.y = dragY;
+			});
+		}
+
 		// create fruit group
 		this.fruitGroup = this.physics.add.group();
 		this.fruitGroup.createMultiple({
@@ -91,7 +104,7 @@ export default class Level01 extends Phaser.Scene {
 				gameObject.x = dragX;
 				gameObject.y = dragY;
 			});
-		}
+	}
 
 		// add score
 		this.score = 0;
@@ -110,12 +123,14 @@ export default class Level01 extends Phaser.Scene {
 	}
 
 	update() {
+		// end game if no health remains
         if (this.currentHealth == 0) {
             this.scene.start('Game Over');
         }
 
+        // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
-        	this.scene.start('Clear');
+        	this.scene.start('Clear', { score: this.score });
         }
 
         this.healthLabel.setText('Health: ' + this.currentHealth);
@@ -124,8 +139,10 @@ export default class Level01 extends Phaser.Scene {
         if (this.score > 0) {
 			this.scoreLabel.setText('Score: ' + this.score);
 		}
+        // set velocity of player
 		this.player.setVelocity(0);
 
+		// move player based on keyboard input
 		if (this.cursorKeys.left.isDown) {
 			this.player.setVelocityX(-300);
 		} else if (this.cursorKeys.right.isDown) {
