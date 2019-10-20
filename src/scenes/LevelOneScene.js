@@ -19,6 +19,11 @@ export default class Level01 extends Phaser.Scene {
 		// set background color
 		this.cameras.main.setBackgroundColor('#2E8B57'); // seagreen
 
+        // add health
+        this.currentHealth = 3;
+        this.maxHealth = 3;
+        this.healthLabel = this.add.text(610, 16, 'Health: ' + this.currentHealth, { fontSize: '32px', fill: '#fff'});
+
 		// create player
 		this.player = this.physics.add.sprite(config.width / 2, config.height / 2, 'icons', 21);
 		this.player.setScale(2);
