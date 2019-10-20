@@ -19,6 +19,9 @@ export default class Level01 extends Phaser.Scene {
 		// set background color
 		this.cameras.main.setBackgroundColor('#2E8B57'); // seagreen
 
+		// add score
+		this.score = 0;
+		this.scoreLabel = this.add.text(16, 16, 'Score: ' + this.score, { fontSize: '32px', fill: '#fff' });
         // add health
         this.currentHealth = 3;
         this.maxHealth = 3;
@@ -48,6 +51,7 @@ export default class Level01 extends Phaser.Scene {
 
 		// detect collision between the player and fruit
 		this.physics.add.overlap(this.player, this.fruitGroup, function (player, fruit) {
+			this.score += 10;
 			this.sound.add('fruit-sound').play();
 			fruit.destroy();
 		}, null, this);
@@ -70,6 +74,7 @@ export default class Level01 extends Phaser.Scene {
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, function (player, bomb) {
+			this.score -= 5;
             this.currentHealth--;
             this.sound.add('bomb-sound').play();
             bomb.destroy();
@@ -115,6 +120,10 @@ export default class Level01 extends Phaser.Scene {
 
         this.healthLabel.setText('Health: ' + this.currentHealth);
 
+        // update score
+        if (this.score > 0) {
+			this.scoreLabel.setText('Score: ' + this.score);
+		}
 		this.player.setVelocity(0);
 
 		if (this.cursorKeys.left.isDown) {
