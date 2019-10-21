@@ -19,11 +19,37 @@ export default class Level01 extends Phaser.Scene {
 		// set background color
 		this.cameras.main.setBackgroundColor('#2E8B57'); // seagreen
 
+		// add score
+		this.score = 0;
+		this.scoreLabel = this.add.text(16, 16, 'Score: ' + this.score, { fontSize: '32px', fill: '#fff' });
+
+		// add time
+		this.timer = 2000;
+		this.timeLabel = this.add.text(16, 50, 'Time: ' + Math.round(this.timer / 100), { fontSize: '32px', fill: '#fff' });
+
+        // add health
+        this.currentHealth = 3;
+        this.maxHealth = 3;
+        this.healthLabel = this.add.text(610, 16, 'Health: ' + this.currentHealth, { fontSize: '32px', fill: '#fff'});
+
 		// create player
 		this.player = this.physics.add.sprite(config.width / 2, config.height / 2, 'icons', 21);
 		this.player.setScale(2);
 		this.player.speed = 4;
 		this.player.setCollideWorldBounds(true);
+
+		// add keyboard input detection
+		this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+		// make player draggable on mobile devices
+		if (config.scale) {
+			this.player.setInteractive();
+			this.input.setDraggable(this.player);
+			this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+				gameObject.x = dragX;
+				gameObject.y = dragY;
+			});
+		}
 
 		// create fruit group
 		this.fruitGroup = this.physics.add.group();
@@ -43,7 +69,9 @@ export default class Level01 extends Phaser.Scene {
 
 		// detect collision between the player and fruit
 		this.physics.add.overlap(this.player, this.fruitGroup, function (player, fruit) {
+			this.score += 10;
 			this.sound.add('fruit-sound').play();
+			this.scoreLabel.setText('Score: ' + this.score);
 			fruit.destroy();
 		}, null, this);
 
@@ -65,53 +93,33 @@ export default class Level01 extends Phaser.Scene {
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, function (player, bomb) {
+			this.score -= 5;
             this.currentHealth--;
             this.sound.add('bomb-sound').play();
+	        this.healthLabel.setText('Health: ' + this.currentHealth);
+			this.scoreLabel.setText('Score: ' + this.score);
             bomb.destroy();
         }, null, this);
-
-		// add keyboard input detection
-		this.cursorKeys = this.input.keyboard.createCursorKeys();
-
-		// make player draggable on mobile devices
-		if (config.scale) {
-			this.player.setInteractive();
-			this.input.setDraggable(this.player);
-			this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-				gameObject.x = dragX;
-				gameObject.y = dragY;
-			});
-		}
-
-		// add score
-		this.score = 0;
-		this.scoreLabel = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
-
-		// add time
-		this.initialTime = 20000;
-		this.timeLabel = this.add.text(16, 50, 'Time: 20', { fontSize: '32px', fill: '#fff' });
-
-        // add health
-        this.currentHealth = 3;
-        this.maxHealth = 3;
-        this.healthLabel = this.add.text(610, 16, 'Health: 3', { fontSize: '32px', fill: '#fff'});
-
-        this.clearSound = this.sound.add('clear-sound');
 	}
 
 	update() {
-        if (this.currentHealth == 0) {
+		// end game if no time or health remains
+		if (this.timer == 0 || this.currentHealth == 0) {
             this.scene.start('Game Over');
-        }
+		} else {
+			this.timer--;
+			this.timeLabel.setText('Time: ' + Math.round(this.timer / 100));
+		}
 
+        // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
-        	this.scene.start('Clear');
+        	this.scene.start('Clear', { score: this.score });
         }
 
-        this.healthLabel.setText('Health: ' + this.currentHealth);
-
+        // set velocity of player
 		this.player.setVelocity(0);
 
+		// move player based on keyboard input
 		if (this.cursorKeys.left.isDown) {
 			this.player.setVelocityX(-300);
 		} else if (this.cursorKeys.right.isDown) {
