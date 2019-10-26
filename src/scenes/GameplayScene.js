@@ -4,6 +4,7 @@ import fruitSound from '../assets/sounds/se2.wav';
 import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
+import Player from '../sprites/Player';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
@@ -39,10 +40,7 @@ export default class GameplayScene extends Phaser.Scene {
         this.healthLabel = this.add.text(610, 16, 'Health: ' + this.currentHealth, { fontSize: '32px', fill: '#fff'});
 
 		// create player
-		this.player = this.physics.add.sprite(config.width / 2, config.height / 2, 'icons', 21);
-		this.player.setScale(2);
-		this.player.speed = 4;
-		this.player.setCollideWorldBounds(true);
+		this.player = new Player({ scene: this, x: config.width / 2, y: config.height / 2 });
 
 		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
