@@ -20,5 +20,11 @@ export default class StartScene extends Phaser.Scene {
 		this.input.once('pointerdown', function (event) {
 			this.scene.start('Gameplay', { level: this.level });
 		}, this);
+
+		this.input.keyboard.on('keydown', (input) => {
+			if (input.key == "Enter") {
+				this.scene.start('Gameplay', { level: this.level });
+			}
+		});
 	}
 }
