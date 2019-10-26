@@ -3,21 +3,27 @@ import config from '../config/config';
 import fruitSound from '../assets/sounds/se2.wav';
 import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
+import explosionSpritesheet from '../assets/images/explosion.png';
 
-export default class Level01 extends Phaser.Scene {
+export default class GameplayScene extends Phaser.Scene {
 	constructor() {
-		super('Level 01');
+		super('Gameplay');
+	}
+
+	init(data) {
+		this.level = data.level;
 	}
 
 	preload() {
 		this.load.audio('fruit-sound', fruitSound);
 		this.load.audio('bomb-sound', bombSound);
 		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
+		this.load.spritesheet('explosion', explosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
 	}
 
 	create() {
 		// set background color
-		this.cameras.main.setBackgroundColor('#2E8B57'); // seagreen
+		this.cameras.main.setBackgroundColor(this.level.backgroundColor); // seagreen
 
 		// add score
 		this.score = 0;
@@ -45,7 +51,7 @@ export default class Level01 extends Phaser.Scene {
 		if (config.scale) {
 			this.player.setInteractive();
 			this.input.setDraggable(this.player);
-			this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+			this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
 				gameObject.x = dragX;
 				gameObject.y = dragY;
 			});
@@ -68,7 +74,7 @@ export default class Level01 extends Phaser.Scene {
 		});
 
 		// detect collision between the player and fruit
-		this.physics.add.overlap(this.player, this.fruitGroup, function (player, fruit) {
+		this.physics.add.overlap(this.player, this.fruitGroup, (player, fruit) => {
 			this.score += 10;
 			this.sound.add('fruit-sound').play();
 			this.scoreLabel.setText('Score: ' + this.score);
@@ -80,7 +86,7 @@ export default class Level01 extends Phaser.Scene {
         this.bombGroup.createMultiple({
             key: 'icons',
             frame: 24,
-            repeat: 5
+            repeat: this.level.totalBombs
         });
         this.bombGroup.children.iterate(bomb => {
             bomb.setPosition(
@@ -91,29 +97,46 @@ export default class Level01 extends Phaser.Scene {
             bomb.setCollideWorldBounds(true);
         });
 
+        // add explosion animation
+        this.anims.create({
+        	key: 'explode',
+        	frames: this.anims.generateFrameNumbers('explosion'),
+        	frameRate: 20,
+        	repeat: 0,
+        	hideOnComplete: true
+        });
+
         // detect collision between the player and bomb
-        this.physics.add.overlap(this.player, this.bombGroup, function (player, bomb) {
+        this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
 			this.score -= 5;
             this.currentHealth--;
-            this.sound.add('bomb-sound').play();
 	        this.healthLabel.setText('Health: ' + this.currentHealth);
 			this.scoreLabel.setText('Score: ' + this.score);
+            this.sound.add('bomb-sound').play();
+            this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
             bomb.destroy();
+            this.explosion.play('explode');
         }, null, this);
 	}
 
 	update() {
 		// end game if no time or health remains
 		if (this.timer == 0 || this.currentHealth == 0) {
-            this.scene.start('Game Over');
+			this.level.isGameOver = true;
 		} else {
 			this.timer--;
 			this.timeLabel.setText('Time: ' + Math.round(this.timer / 100));
 		}
 
+		// reset score if it's negative
+		if (this.score < 0) {
+			this.score = 0;
+			this.scoreLabel.setText('Score: ' + this.score);
+		}
+
         // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
-        	this.scene.start('Clear', { score: this.score });
+        	this.level.isCleared = true;
         }
 
         // set velocity of player

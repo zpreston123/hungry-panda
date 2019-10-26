@@ -1,18 +1,19 @@
 import Phaser from 'phaser';
 import config from './config/config';
+import levels from './config/levels';
 import StartScene from './scenes/StartScene';
+import GameplayScene from './scenes/GameplayScene';
 import GameOverScene from './scenes/GameOverScene';
-import LevelOneScene from './scenes/LevelOneScene';
 import ClearScene from './scenes/ClearScene';
 
 class Game extends Phaser.Game {
 	constructor(config) {
 		super(config);
 		this.scene.add('Start', StartScene);
-		this.scene.add('Level 01', LevelOneScene);
+		this.scene.add('Gameplay', GameplayScene);
 		this.scene.add('Clear', ClearScene);
 		this.scene.add('End', GameOverScene);
-		this.scene.start('Start');
+		this.scene.start('Start', { level: levels[0] });
 	}
 
 	create() {
