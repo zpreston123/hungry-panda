@@ -6,6 +6,10 @@ export default class StartScene extends Phaser.Scene {
 		super('Start');
 	}
 
+	init(data) {
+		this.level = data.level;
+	}
+
 	preload() {
 		this.load.image('start', StartImage);
 	}
@@ -14,7 +18,7 @@ export default class StartScene extends Phaser.Scene {
 		this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'start');
 
 		this.input.once('pointerdown', function (event) {
-			this.scene.start('Level 01');
+			this.scene.start('Gameplay', { level: this.level });
 		}, this);
 	}
 }
