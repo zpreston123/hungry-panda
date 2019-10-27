@@ -6,9 +6,7 @@ import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
 import Player from '../sprites/Player';
 import { FruitGroup, BombGroup } from '../groups';
-import HealthLabel from '../labels/HealthLabel';
-import ScoreLabel from '../labels/ScoreLabel';
-import TimeLabel from '../labels/TimeLabel';
+import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
