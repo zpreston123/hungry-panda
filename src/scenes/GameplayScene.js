@@ -8,6 +8,7 @@ import Player from '../sprites/Player';
 import { FruitGroup, BombGroup } from '../groups';
 import HealthLabel from '../labels/HealthLabel';
 import ScoreLabel from '../labels/ScoreLabel';
+import TimeLabel from '../labels/TimeLabel';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
@@ -30,7 +31,7 @@ export default class GameplayScene extends Phaser.Scene {
 		// set background color
 		this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
-		// add score
+		// create score label
 		this.scoreLabel = new ScoreLabel({
 			scene: this,
 			x: 16,
@@ -39,11 +40,16 @@ export default class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff' }
 		});
 
-		// add time
-		this.timer = 2000;
-		this.timeLabel = this.add.text(16, 50, `Time: ${Math.round(this.timer / 100)}`, { fontSize: '32px', fill: '#fff' });
+		// create time label
+		this.timeLabel = new TimeLabel({
+			scene: this,
+			x: 16,
+			y: 50,
+			text: 'Time:',
+			style: { fontSize: '32px', fill: '#fff' }
+		});
 
-        // add health
+        // create health label
         this.healthLabel = new HealthLabel({
         	scene: this,
         	x: 610,
@@ -109,11 +115,10 @@ export default class GameplayScene extends Phaser.Scene {
 
     update() {
 		// end game if no time or health remains
-		if (this.timer == 0 || this.healthLabel.currentHealth == 0) {
+		if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
 			this.scene.start('Game Over');
 		} else {
-			this.timer--;
-			this.timeLabel.setText(`Time: ${Math.round(this.timer / 100)}`);
+			this.timeLabel.decrementTime();
 		}
 
 		// reset score if it's negative
