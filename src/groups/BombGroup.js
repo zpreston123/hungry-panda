@@ -23,5 +23,5 @@ export default class BombGroup extends Phaser.Physics.Arcade.Group {
         	repeat: 0,
         	hideOnComplete: true
         });
-	}
+    }
 }

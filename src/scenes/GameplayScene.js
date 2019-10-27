@@ -78,28 +78,28 @@ export default class GameplayScene extends Phaser.Scene {
 		}, null, this);
 
         // create bomb group
-		this.bombGroup = new BombGroup({
-			world: this.physics.world,
-			scene: this,
-			x: config.width,
-			y: config.height,
-			total: this.level.totalBombs
-		});
+        this.bombGroup = new BombGroup({
+        	world: this.physics.world,
+        	scene: this,
+        	x: config.width,
+        	y: config.height,
+        	total: this.level.totalBombs
+        });
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
-			this.score -= 5;
-            this.currentHealth--;
-	        this.healthLabel.setText('Health: ' + this.currentHealth);
-			this.scoreLabel.setText('Score: ' + this.score);
-            this.sound.add('bomb-sound').play();
-            this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
-            bomb.destroy();
-            this.explosion.play('explode');
+        	this.score -= 5;
+        	this.currentHealth--;
+        	this.healthLabel.setText('Health: ' + this.currentHealth);
+        	this.scoreLabel.setText('Score: ' + this.score);
+        	this.sound.add('bomb-sound').play();
+        	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
+        	bomb.destroy();
+        	this.explosion.play('explode');
         }, null, this);
-	}
+    }
 
-	update() {
+    update() {
 		// end game if no time or health remains
 		if (this.timer == 0 || this.currentHealth == 0) {
 			this.level.isGameOver = true;
@@ -120,7 +120,7 @@ export default class GameplayScene extends Phaser.Scene {
         }
 
         // set velocity of player
-		this.player.setVelocity(0);
+        this.player.setVelocity(0);
 
 		// move player based on keyboard input
 		if (this.cursorKeys.left.isDown) {

@@ -20,6 +20,6 @@ export default class ClearScene extends Phaser.Scene {
 		this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'clear-image');
 		this.scoreText = this.add.text(this.cameras.main.width / 2, (this.cameras.main.height / 2) + 70, 'SCORE: ' + this.score, { fontSize: '32px', fill: '#fff'});
 		this.scoreText.setOrigin(0.5);
-        this.sound.add('clear-sound').play();
+		this.sound.add('clear-sound').play();
 	}
 }

@@ -35,9 +35,9 @@ class Game extends Phaser.Game {
 	}
 }
 
-window.onload = function () {
+window.onload = () => {
 	// center and scale game for mobile devices
-	if (screen.width < 600){
+	if (screen.width < 600) {
 		config.scale = {
 			mode: Phaser.Scale.FIT,
 			autoCenter: Phaser.Scale.CENTER_BOTH,
