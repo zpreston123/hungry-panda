@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import config from '../config/config';
+import config from '../config/game';
 import fruitSound from '../assets/sounds/se2.wav';
 import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
