@@ -13,6 +13,4 @@ class Game extends Phaser.Game {
 	}
 }
 
-window.onload = () => {
-	window.game = new Game(config);
-};
+const game = new Game(config);
