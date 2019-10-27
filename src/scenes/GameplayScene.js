@@ -7,6 +7,7 @@ import explosionSpritesheet from '../assets/images/explosion.png';
 import Player from '../sprites/Player';
 import { FruitGroup, BombGroup } from '../groups';
 import HealthLabel from '../labels/HealthLabel';
+import ScoreLabel from '../labels/ScoreLabel';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
@@ -30,8 +31,13 @@ export default class GameplayScene extends Phaser.Scene {
 		this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
 		// add score
-		this.score = 0;
-		this.scoreLabel = this.add.text(16, 16, `Score: ${this.score}` , { fontSize: '32px', fill: '#fff' });
+		this.scoreLabel = new ScoreLabel({
+			scene: this,
+			x: 16,
+			y: 16,
+			text: 'Score:',
+			style: { fontSize: '32px', fill: '#fff' }
+		});
 
 		// add time
 		this.timer = 2000;
@@ -76,9 +82,8 @@ export default class GameplayScene extends Phaser.Scene {
 
 		// detect collision between the player and fruit
 		this.physics.add.overlap(this.player, this.fruitGroup, (player, fruit) => {
-			this.score += 10;
+			this.scoreLabel.increaseScore();
 			this.sound.add('fruit-sound').play();
-			this.scoreLabel.setText(`Score: ${this.score}`);
 			fruit.destroy();
 		}, null, this);
 
@@ -93,9 +98,8 @@ export default class GameplayScene extends Phaser.Scene {
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
-        	this.score -= 5;
         	this.healthLabel.decrementHealth();
-        	this.scoreLabel.setText(`Score: ${this.score}`);
+        	this.scoreLabel.decreaseScore();
         	this.sound.add('bomb-sound').play();
         	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
         	bomb.destroy();
@@ -113,15 +117,14 @@ export default class GameplayScene extends Phaser.Scene {
 		}
 
 		// reset score if it's negative
-		if (this.score < 0) {
-			this.score = 0;
-			this.scoreLabel.setText(`Score: ${this.score}`);
+		if (this.scoreLabel.score < 0) {
+			this.scoreLabel.resetScore();
 		}
 
         // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
         	let index = this.levels.indexOf(this.level) + 1;
-        	this.scene.start('Clear', { score: this.score, nextLevel: this.levels[index], levels: this.levels });
+        	this.scene.start('Clear', { score: this.scoreLabel.score, nextLevel: this.levels[index], levels: this.levels });
         }
 
         // set velocity of player
