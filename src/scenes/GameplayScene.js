@@ -6,6 +6,7 @@ import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
 import Player from '../sprites/Player';
 import { FruitGroup, BombGroup } from '../groups';
+import HealthLabel from '../labels/HealthLabel';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
@@ -37,9 +38,13 @@ export default class GameplayScene extends Phaser.Scene {
 		this.timeLabel = this.add.text(16, 50, `Time: ${Math.round(this.timer / 100)}`, { fontSize: '32px', fill: '#fff' });
 
         // add health
-        this.currentHealth = 3;
-        this.maxHealth = 3;
-        this.healthLabel = this.add.text(610, 16, `Health: ${this.currentHealth}`, { fontSize: '32px', fill: '#fff'});
+        this.healthLabel = new HealthLabel({
+        	scene: this,
+        	x: 610,
+        	y: 16,
+    		text: 'Health:',
+			style: { fontSize: '32px', fill: '#fff'}
+        });
 
 		// create player
 		this.player = new Player({
@@ -89,8 +94,7 @@ export default class GameplayScene extends Phaser.Scene {
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
         	this.score -= 5;
-        	this.currentHealth--;
-        	this.healthLabel.setText(`Health: ${this.currentHealth}`);
+        	this.healthLabel.decrementHealth();
         	this.scoreLabel.setText(`Score: ${this.score}`);
         	this.sound.add('bomb-sound').play();
         	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
@@ -101,7 +105,7 @@ export default class GameplayScene extends Phaser.Scene {
 
     update() {
 		// end game if no time or health remains
-		if (this.timer == 0 || this.currentHealth == 0) {
+		if (this.timer == 0 || this.healthLabel.currentHealth == 0) {
 			this.scene.start('Game Over');
 		} else {
 			this.timer--;
@@ -117,7 +121,6 @@ export default class GameplayScene extends Phaser.Scene {
         // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
         	let index = this.levels.indexOf(this.level) + 1;
-        	console.log(this.levels[index]);
         	this.scene.start('Clear', { score: this.score, nextLevel: this.levels[index], levels: this.levels });
         }
 
