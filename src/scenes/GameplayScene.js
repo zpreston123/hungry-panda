@@ -30,16 +30,16 @@ export default class GameplayScene extends Phaser.Scene {
 
 		// add score
 		this.score = 0;
-		this.scoreLabel = this.add.text(16, 16, 'Score: ' + this.score, { fontSize: '32px', fill: '#fff' });
+		this.scoreLabel = this.add.text(16, 16, `Score: ${this.score}` , { fontSize: '32px', fill: '#fff' });
 
 		// add time
 		this.timer = 2000;
-		this.timeLabel = this.add.text(16, 50, 'Time: ' + Math.round(this.timer / 100), { fontSize: '32px', fill: '#fff' });
+		this.timeLabel = this.add.text(16, 50, `Time: ${Math.round(this.timer / 100)}`, { fontSize: '32px', fill: '#fff' });
 
         // add health
         this.currentHealth = 3;
         this.maxHealth = 3;
-        this.healthLabel = this.add.text(610, 16, 'Health: ' + this.currentHealth, { fontSize: '32px', fill: '#fff'});
+        this.healthLabel = this.add.text(610, 16, `Health: ${this.currentHealth}`, { fontSize: '32px', fill: '#fff'});
 
 		// create player
 		this.player = new Player({
@@ -73,7 +73,7 @@ export default class GameplayScene extends Phaser.Scene {
 		this.physics.add.overlap(this.player, this.fruitGroup, (player, fruit) => {
 			this.score += 10;
 			this.sound.add('fruit-sound').play();
-			this.scoreLabel.setText('Score: ' + this.score);
+			this.scoreLabel.setText(`Score: ${this.score}`);
 			fruit.destroy();
 		}, null, this);
 
@@ -90,8 +90,8 @@ export default class GameplayScene extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
         	this.score -= 5;
         	this.currentHealth--;
-        	this.healthLabel.setText('Health: ' + this.currentHealth);
-        	this.scoreLabel.setText('Score: ' + this.score);
+        	this.healthLabel.setText(`Health: ${this.currentHealth}`);
+        	this.scoreLabel.setText(`Score: ${this.score}`);
         	this.sound.add('bomb-sound').play();
         	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
         	bomb.destroy();
@@ -105,13 +105,13 @@ export default class GameplayScene extends Phaser.Scene {
 			this.level.isGameOver = true;
 		} else {
 			this.timer--;
-			this.timeLabel.setText('Time: ' + Math.round(this.timer / 100));
+			this.timeLabel.setText(`Time: ${Math.round(this.timer / 100)}`);
 		}
 
 		// reset score if it's negative
 		if (this.score < 0) {
 			this.score = 0;
-			this.scoreLabel.setText('Score: ' + this.score);
+			this.scoreLabel.setText(`Score: ${this.score}`);
 		}
 
         // clear level if no fruit remain
