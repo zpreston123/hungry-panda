@@ -1,2 +1,2 @@
-export { default as config } from './config';
+export { default as config } from './game';
 export { default as levels } from './levels';
