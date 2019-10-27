@@ -22,7 +22,7 @@ export default class StartScene extends Phaser.Scene {
 		}, this);
 
 		this.input.keyboard.on('keydown', input => {
-			if (input.key == "Enter") {
+			if (input.key == 'Enter') {
 				this.scene.start('Gameplay', { level: this.level });
 			}
 		});
