@@ -13,6 +13,7 @@ export default class GameplayScene extends Phaser.Scene {
 	}
 
 	init(data) {
+		this.levels = data.levels;
 		this.level = data.level;
 	}
 
@@ -25,7 +26,7 @@ export default class GameplayScene extends Phaser.Scene {
 
 	create() {
 		// set background color
-		this.cameras.main.setBackgroundColor(this.level.backgroundColor); // seagreen
+		this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
 		// add score
 		this.score = 0;
@@ -101,7 +102,7 @@ export default class GameplayScene extends Phaser.Scene {
     update() {
 		// end game if no time or health remains
 		if (this.timer == 0 || this.currentHealth == 0) {
-			this.level.isGameOver = true;
+			this.scene.start('Game Over');
 		} else {
 			this.timer--;
 			this.timeLabel.setText(`Time: ${Math.round(this.timer / 100)}`);
@@ -115,7 +116,9 @@ export default class GameplayScene extends Phaser.Scene {
 
         // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
-        	this.level.isCleared = true;
+        	let index = this.levels.indexOf(this.level) + 1;
+        	console.log(this.levels[index]);
+        	this.scene.start('Clear', { score: this.score, nextLevel: this.levels[index], levels: this.levels });
         }
 
         // set velocity of player
