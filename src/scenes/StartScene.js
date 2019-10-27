@@ -8,6 +8,7 @@ export default class StartScene extends Phaser.Scene {
 
 	init(data) {
 		this.level = data.level;
+		this.levels = data.levels;
 	}
 
 	preload() {
@@ -18,12 +19,12 @@ export default class StartScene extends Phaser.Scene {
 		this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'start');
 
 		this.input.once('pointerdown', event => {
-			this.scene.start('Gameplay', { level: this.level });
+			this.scene.start('Gameplay', { level: this.level, levels: this.levels });
 		}, this);
 
 		this.input.keyboard.on('keydown', input => {
 			if (input.key == 'Enter') {
-				this.scene.start('Gameplay', { level: this.level });
+				this.scene.start('Gameplay', { level: this.level, levels: this.levels });
 			}
 		});
 	}
