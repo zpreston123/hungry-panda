@@ -5,6 +5,8 @@ import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
 import Player from '../sprites/Player';
+import FruitGroup from '../groups/FruitGroup';
+import BombGroup from '../groups/BombGroup';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
@@ -40,7 +42,11 @@ export default class GameplayScene extends Phaser.Scene {
         this.healthLabel = this.add.text(610, 16, 'Health: ' + this.currentHealth, { fontSize: '32px', fill: '#fff'});
 
 		// create player
-		this.player = new Player({ scene: this, x: config.width / 2, y: config.height / 2 });
+		this.player = new Player({
+			scene: this,
+			x: config.width / 2,
+			y: config.height / 2
+		});
 
 		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -56,19 +62,11 @@ export default class GameplayScene extends Phaser.Scene {
 		}
 
 		// create fruit group
-		this.fruitGroup = this.physics.add.group();
-		this.fruitGroup.createMultiple({
-			key: 'icons',
-			frame: [15, 16, 17, 18, 27, 28, 29, 32],
-			randomFrame: true
-		});
-		this.fruitGroup.children.iterate(fruit => {
-			fruit.setPosition(
-				Phaser.Math.Between(20, config.width-20),
-				Phaser.Math.Between(100, config.height-20)
-			);
-			fruit.setScale(1.5);
-			fruit.setCollideWorldBounds(true);
+		this.fruitGroup = new FruitGroup({
+			world: this.physics.world,
+			scene: this,
+			x: config.width,
+			y: config.height
 		});
 
 		// detect collision between the player and fruit
@@ -79,30 +77,14 @@ export default class GameplayScene extends Phaser.Scene {
 			fruit.destroy();
 		}, null, this);
 
-        // add bomb group
-        this.bombGroup = this.physics.add.group();
-        this.bombGroup.createMultiple({
-            key: 'icons',
-            frame: 24,
-            repeat: this.level.totalBombs
-        });
-        this.bombGroup.children.iterate(bomb => {
-            bomb.setPosition(
-                Phaser.Math.Between(20, config.width-20),
-                Phaser.Math.Between(100, config.height-20)
-            );
-            bomb.setScale(1.5);
-            bomb.setCollideWorldBounds(true);
-        });
-
-        // add explosion animation
-        this.anims.create({
-        	key: 'explode',
-        	frames: this.anims.generateFrameNumbers('explosion'),
-        	frameRate: 20,
-        	repeat: 0,
-        	hideOnComplete: true
-        });
+        // create bomb group
+		this.bombGroup = new BombGroup({
+			world: this.physics.world,
+			scene: this,
+			x: config.width,
+			y: config.height,
+			total: this.level.totalBombs
+		});
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
