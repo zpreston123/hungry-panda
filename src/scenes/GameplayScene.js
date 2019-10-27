@@ -5,8 +5,7 @@ import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
 import Player from '../sprites/Player';
-import FruitGroup from '../groups/FruitGroup';
-import BombGroup from '../groups/BombGroup';
+import { FruitGroup, BombGroup } from '../groups';
 
 export default class GameplayScene extends Phaser.Scene {
 	constructor() {
