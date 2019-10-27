@@ -14,6 +14,6 @@ export default class GameOverScene extends Phaser.Scene {
 
 	create() {
 		this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'game-over');
-        this.sound.add('game-over-sound').play();
+		this.sound.add('game-over-sound').play();
 	}
 }
