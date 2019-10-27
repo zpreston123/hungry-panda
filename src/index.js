@@ -14,16 +14,5 @@ class Game extends Phaser.Game {
 }
 
 window.onload = () => {
-	// center and scale game for mobile devices
-	if (screen.width < 600) {
-		config.scale = {
-			mode: Phaser.Scale.FIT,
-			autoCenter: Phaser.Scale.CENTER_BOTH,
-			parent: 'phaser-example',
-			width: 500,
-			height: 400
-		};
-	}
-
 	window.game = new Game(config);
 };
