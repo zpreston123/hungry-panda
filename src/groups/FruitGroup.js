@@ -13,7 +13,7 @@ export default class FruitGroup extends Phaser.Physics.Arcade.Group {
 				Phaser.Math.Between(20, config.x-20),
 				Phaser.Math.Between(100, config.y-20)
 			);
-			fruit.setScale(1.5);
+			fruit.setScale(3);
 			fruit.setCollideWorldBounds(true);
 		});
 	}

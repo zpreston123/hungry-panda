@@ -26,10 +26,8 @@ export default class GameplayScene extends Phaser.Scene {
 	}
 
 	create() {
-		// set background color
 		this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
-		// create score label
 		this.scoreLabel = new ScoreLabel({
 			scene: this,
 			x: 16,
@@ -38,7 +36,6 @@ export default class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff' }
 		});
 
-		// create time label
 		this.timeLabel = new TimeLabel({
 			scene: this,
 			x: 16,
@@ -47,7 +44,6 @@ export default class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff' }
 		});
 
-        // create health label
         this.healthLabel = new HealthLabel({
         	scene: this,
         	x: 610,
@@ -56,14 +52,12 @@ export default class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff'}
         });
 
-		// create player
 		this.player = new Player({
 			scene: this,
 			x: config.width / 2,
 			y: config.height / 2
 		});
 
-		// add keyboard input detection
 		this.cursorKeys = this.input.keyboard.createCursorKeys();
 
 		// make player draggable on mobile devices
@@ -76,7 +70,6 @@ export default class GameplayScene extends Phaser.Scene {
 			});
 		}
 
-		// create fruit group
 		this.fruitGroup = new FruitGroup({
 			world: this.physics.world,
 			scene: this,
@@ -91,7 +84,6 @@ export default class GameplayScene extends Phaser.Scene {
 			fruit.destroy();
 		}, null, this);
 
-        // create bomb group
         this.bombGroup = new BombGroup({
         	world: this.physics.world,
         	scene: this,
@@ -112,28 +104,23 @@ export default class GameplayScene extends Phaser.Scene {
     }
 
     update() {
-		// end game if no time or health remains
 		if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
 			this.scene.start('Game Over');
 		} else {
 			this.timeLabel.decrementTime();
 		}
 
-		// reset score if it's negative
 		if (this.scoreLabel.score < 0) {
 			this.scoreLabel.resetScore();
 		}
 
-        // clear level if no fruit remain
         if (this.fruitGroup.getLength() == 0) {
         	let index = this.levels.indexOf(this.level) + 1;
         	this.scene.start('Clear', { score: this.scoreLabel.score, nextLevel: this.levels[index], levels: this.levels });
         }
 
-        // set velocity of player
         this.player.setVelocity(0);
 
-		// move player based on keyboard input
 		if (this.cursorKeys.left.isDown) {
 			this.player.setVelocityX(-300);
 		} else if (this.cursorKeys.right.isDown) {

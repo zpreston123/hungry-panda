@@ -13,7 +13,7 @@ export default class BombGroup extends Phaser.Physics.Arcade.Group {
                 Phaser.Math.Between(20, config.x-20),
                 Phaser.Math.Between(100, config.y-20)
             );
-            bomb.setScale(1.5);
+            bomb.setScale(3);
             bomb.setCollideWorldBounds(true);
         });
         config.scene.anims.create({
