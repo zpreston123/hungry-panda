@@ -98,6 +98,7 @@ class GameplayScene extends Phaser.Scene {
         	this.scoreLabel.decreaseScore();
         	this.sound.add('bomb-sound').play();
         	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
+        	this.explosion.setScale(2);
         	bomb.destroy();
         	this.explosion.play('explode');
         }, null, this);
