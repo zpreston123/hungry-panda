@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class ScoreLabel extends Phaser.GameObjects.Text {
+class ScoreLabel extends Phaser.GameObjects.Text {
 	constructor(config) {
 		super(config.scene, config.x, config.y, config.text, config.style);
         this.score = 0;
@@ -23,3 +23,5 @@ export default class ScoreLabel extends Phaser.GameObjects.Text {
 		this.setText(`Score: ${this.score}`);
 	}
 }
+
+export default ScoreLabel;

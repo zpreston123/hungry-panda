@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+class Player extends Phaser.Physics.Arcade.Sprite {
 	constructor(config) {
 		super(config.scene, config.x, config.y, 'icons', 21);
 		this.setScale(3);
@@ -10,3 +10,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.setCollideWorldBounds(true);
 	}
 }
+
+export default Player;

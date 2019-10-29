@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class HealthLabel extends Phaser.GameObjects.Text {
+class HealthLabel extends Phaser.GameObjects.Text {
 	constructor(config) {
 		super(config.scene, config.x, config.y, config.text, config.style);
         this.currentHealth = 3;
@@ -13,3 +13,5 @@ export default class HealthLabel extends Phaser.GameObjects.Text {
 		this.setText(`Health: ${this.currentHealth}`);
 	}
 }
+
+export default HealthLabel;

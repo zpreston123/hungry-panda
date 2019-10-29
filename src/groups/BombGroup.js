@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class BombGroup extends Phaser.Physics.Arcade.Group {
+class BombGroup extends Phaser.Physics.Arcade.Group {
 	constructor(config) {
 		super(config.world, config.scene);
         this.createMultiple({
@@ -25,3 +25,5 @@ export default class BombGroup extends Phaser.Physics.Arcade.Group {
         });
     }
 }
+
+export default BombGroup;

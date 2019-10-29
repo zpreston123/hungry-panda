@@ -8,7 +8,7 @@ import Player from '../sprites/Player';
 import { FruitGroup, BombGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
-export default class GameplayScene extends Phaser.Scene {
+class GameplayScene extends Phaser.Scene {
 	constructor() {
 		super('Gameplay');
 	}
@@ -132,3 +132,5 @@ export default class GameplayScene extends Phaser.Scene {
 		}
 	}
 }
+
+export default GameplayScene;
