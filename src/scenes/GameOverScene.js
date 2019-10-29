@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import gameOverImage from '../assets/images/end.png';
 import gameOverSound from '../assets/sounds/se7.wav';
 
-export default class GameOverScene extends Phaser.Scene {
+class GameOverScene extends Phaser.Scene {
 	constructor() {
 		super('Game Over');
 	}
@@ -17,3 +17,5 @@ export default class GameOverScene extends Phaser.Scene {
 		this.sound.add('game-over-sound').play();
 	}
 }
+
+export default GameOverScene;

@@ -1,15 +1,21 @@
 import Phaser from 'phaser';
 
-export default class TimeLabel extends Phaser.GameObjects.Text {
+class TimeLabel extends Phaser.GameObjects.Text {
 	constructor(config) {
 		super(config.scene, config.x, config.y, config.text, config.style);
-        this.timer = 2000;
-        this.setText(`Time: ${Math.round(this.timer / 100)}`);
-        config.scene.add.existing(this);
+		this.time = 2000;
+		this.setLabel(this.time);
+		config.scene.add.existing(this);
 	}
 
 	decrementTime() {
-		this.timer--;
-		this.setText(`Time: ${Math.round(this.timer / 100)}`);
+		this.time--;
+		this.setLabel(this.time);
+	}
+
+	setLabel(time) {
+		this.setText(`Time: ${Math.round(time / 100)}`);
 	}
 }
+
+export default TimeLabel;

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import clearImage from '../assets/images/clear.png';
 import clearSound from '../assets/sounds/se6.wav';
 
-export default class ClearScene extends Phaser.Scene {
+class ClearScene extends Phaser.Scene {
 	constructor() {
 		super('Clear');
 	}
@@ -37,3 +37,5 @@ export default class ClearScene extends Phaser.Scene {
 		}
 	}
 }
+
+export default ClearScene;

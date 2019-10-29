@@ -8,7 +8,7 @@ import Player from '../sprites/Player';
 import { FruitGroup, BombGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
-export default class GameplayScene extends Phaser.Scene {
+class GameplayScene extends Phaser.Scene {
 	constructor() {
 		super('Gameplay');
 	}
@@ -44,13 +44,13 @@ export default class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff' }
 		});
 
-        this.healthLabel = new HealthLabel({
-        	scene: this,
-        	x: 610,
-        	y: 16,
-    		text: 'Health:',
+		this.healthLabel = new HealthLabel({
+			scene: this,
+			x: 610,
+			y: 16,
+			text: 'Health:',
 			style: { fontSize: '32px', fill: '#fff'}
-        });
+		});
 
 		this.player = new Player({
 			scene: this,
@@ -84,13 +84,13 @@ export default class GameplayScene extends Phaser.Scene {
 			fruit.destroy();
 		}, null, this);
 
-        this.bombGroup = new BombGroup({
-        	world: this.physics.world,
-        	scene: this,
-        	x: config.width,
-        	y: config.height,
-        	total: this.level.totalBombs
-        });
+		this.bombGroup = new BombGroup({
+			world: this.physics.world,
+			scene: this,
+			x: config.width,
+			y: config.height,
+			total: this.level.totalBombs
+		});
 
         // detect collision between the player and bomb
         this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
@@ -98,37 +98,40 @@ export default class GameplayScene extends Phaser.Scene {
         	this.scoreLabel.decreaseScore();
         	this.sound.add('bomb-sound').play();
         	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
+        	this.explosion.setScale(2);
         	bomb.destroy();
         	this.explosion.play('explode');
         }, null, this);
     }
 
     update() {
-		if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
-			this.scene.start('Game Over');
-		} else {
-			this.timeLabel.decrementTime();
-		}
+    	if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
+    		this.scene.start('Game Over');
+    	} else {
+    		this.timeLabel.decrementTime();
+    	}
 
-		if (this.scoreLabel.score < 0) {
-			this.scoreLabel.resetScore();
-		}
+    	if (this.scoreLabel.score < 0) {
+    		this.scoreLabel.resetScore();
+    	}
 
-        if (this.fruitGroup.getLength() == 0) {
-        	let index = this.levels.indexOf(this.level) + 1;
-        	this.scene.start('Clear', { score: this.scoreLabel.score, nextLevel: this.levels[index], levels: this.levels });
-        }
+    	if (this.fruitGroup.getLength() == 0) {
+    		let index = this.levels.indexOf(this.level) + 1;
+    		this.scene.start('Clear', { score: this.scoreLabel.score, nextLevel: this.levels[index], levels: this.levels });
+    	}
 
-        this.player.setVelocity(0);
+    	this.player.setVelocity(0);
 
-		if (this.cursorKeys.left.isDown) {
-			this.player.setVelocityX(-300);
-		} else if (this.cursorKeys.right.isDown) {
-			this.player.setVelocityX(300);
-		} else if (this.cursorKeys.up.isDown) {
-			this.player.setVelocityY(-300);
-		} else if (this.cursorKeys.down.isDown) {
-			this.player.setVelocityY(300);
-		}
-	}
+    	if (this.cursorKeys.left.isDown) {
+    		this.player.setVelocityX(-300);
+    	} else if (this.cursorKeys.right.isDown) {
+    		this.player.setVelocityX(300);
+    	} else if (this.cursorKeys.up.isDown) {
+    		this.player.setVelocityY(-300);
+    	} else if (this.cursorKeys.down.isDown) {
+    		this.player.setVelocityY(300);
+    	}
+    }
 }
+
+export default GameplayScene;

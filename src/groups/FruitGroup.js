@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class FruitGroup extends Phaser.Physics.Arcade.Group {
+class FruitGroup extends Phaser.Physics.Arcade.Group {
 	constructor(config) {
 		super(config.world, config.scene);
 		this.createMultiple({
@@ -18,3 +18,5 @@ export default class FruitGroup extends Phaser.Physics.Arcade.Group {
 		});
 	}
 }
+
+export default FruitGroup;

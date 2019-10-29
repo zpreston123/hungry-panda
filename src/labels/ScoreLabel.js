@@ -1,25 +1,31 @@
 import Phaser from 'phaser';
 
-export default class ScoreLabel extends Phaser.GameObjects.Text {
+class ScoreLabel extends Phaser.GameObjects.Text {
 	constructor(config) {
 		super(config.scene, config.x, config.y, config.text, config.style);
-        this.score = 0;
-    	this.setText(`Score: ${this.score}`);
-        config.scene.add.existing(this);
+		this.score = 0;
+		this.setLabel(this.score);
+		config.scene.add.existing(this);
 	}
 
 	increaseScore() {
 		this.score += 10;
-		this.setText(`Score: ${this.score}`);
+		this.setLabel(this.score);
 	}
 
 	decreaseScore() {
-    	this.score -= 5;
-    	this.setText(`Score: ${this.score}`);
+		this.score -= 5;
+		this.setLabel(this.score);
 	}
 
 	resetScore() {
 		this.score = 0;
-		this.setText(`Score: ${this.score}`);
+		this.setLabel(this.score);
+	}
+
+	setLabel(score) {
+		this.setText(`Score: ${score}`);
 	}
 }
+
+export default ScoreLabel;

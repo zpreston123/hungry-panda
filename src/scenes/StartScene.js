@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import StartImage from '../assets/images/start.png';
 
-export default class StartScene extends Phaser.Scene {
+class StartScene extends Phaser.Scene {
 	constructor() {
 		super('Start');
 	}
@@ -29,3 +29,5 @@ export default class StartScene extends Phaser.Scene {
 		});
 	}
 }
+
+export default StartScene;
