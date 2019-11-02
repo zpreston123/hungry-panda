@@ -4,7 +4,7 @@ import fruitSound from '../assets/sounds/se2.wav';
 import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
-import Player from '../sprites/Player';
+import { Player, Explosion } from '../sprites';
 import { FruitGroup, BombGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
@@ -97,10 +97,8 @@ class GameplayScene extends Phaser.Scene {
         	this.healthLabel.decrementHealth();
         	this.scoreLabel.decreaseScore();
         	this.sound.add('bomb-sound').play();
-        	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
-        	this.explosion.setScale(2);
+        	let explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
         	bomb.destroy();
-        	this.explosion.play('explode');
         }, null, this);
     }
 
