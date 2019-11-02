@@ -15,6 +15,10 @@ class FruitGroup extends Phaser.Physics.Arcade.Group {
 			);
 			fruit.setScale(3);
 			fruit.setCollideWorldBounds(true);
+			if (config.bounce) {
+                fruit.setVelocity(100, 100);
+                fruit.setBounce(1);
+            }
 		});
 	}
 }

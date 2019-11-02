@@ -74,7 +74,8 @@ class GameplayScene extends Phaser.Scene {
 			world: this.physics.world,
 			scene: this,
 			x: config.width,
-			y: config.height
+			y: config.height,
+			bounce: this.level.bounceFruit
 		});
 
 		// detect collision between the player and fruit
@@ -89,7 +90,8 @@ class GameplayScene extends Phaser.Scene {
 			scene: this,
 			x: config.width,
 			y: config.height,
-			total: this.level.totalBombs
+			total: this.level.totalBombs,
+			bounce: this.level.bounceBombs
 		});
 
         // detect collision between the player and bomb
