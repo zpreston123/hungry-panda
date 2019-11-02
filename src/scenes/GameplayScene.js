@@ -106,7 +106,7 @@ class GameplayScene extends Phaser.Scene {
 
     update() {
     	if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
-    		this.scene.start('Game Over');
+    		this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
     	} else {
     		this.timeLabel.decrementTime();
     	}
