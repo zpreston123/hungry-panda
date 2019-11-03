@@ -52,23 +52,7 @@ class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff'}
 		});
 
-		this.player = new Player({
-			scene: this,
-			x: config.width / 2,
-			y: config.height / 2
-		});
-
-		this.cursorKeys = this.input.keyboard.createCursorKeys();
-
-		// make player draggable on mobile devices
-		if (config.scale) {
-			this.player.setInteractive();
-			this.input.setDraggable(this.player);
-			this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
-				gameObject.x = dragX;
-				gameObject.y = dragY;
-			});
-		}
+		this.player = new Player(this, config.width / 2, config.height / 2, 'icons', 21);
 
 		this.fruitGroup = new FruitGroup({
 			world: this.physics.world,
@@ -77,13 +61,6 @@ class GameplayScene extends Phaser.Scene {
 			y: config.height,
 			bounce: this.level.bounceFruit
 		});
-
-		// detect collision between the player and fruit
-		this.physics.add.overlap(this.player, this.fruitGroup, (player, fruit) => {
-			this.scoreLabel.increaseScore();
-			this.sound.add('fruit-sound').play();
-			fruit.destroy();
-		}, null, this);
 
 		this.bombGroup = new BombGroup({
 			world: this.physics.world,
@@ -94,14 +71,33 @@ class GameplayScene extends Phaser.Scene {
 			bounce: this.level.bounceBombs
 		});
 
+		// detect collision between the player and fruit
+		this.physics.add.collider(this.player, this.fruitGroup, (player, fruit) => {
+			this.scoreLabel.increaseScore();
+			this.sound.add('fruit-sound').play();
+			fruit.destroy();
+		}, null, this);
+
         // detect collision between the player and bomb
-        this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
+        this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
         	this.healthLabel.decrementHealth();
         	this.scoreLabel.decreaseScore();
         	this.sound.add('bomb-sound').play();
         	let explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
         	bomb.destroy();
         }, null, this);
+
+        this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+		// make player draggable on mobile devices
+		if (config.scale) {
+			this.player.setInteractive();
+			this.input.setDraggable(this.player);
+			this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
+				gameObject.x = dragX;
+				gameObject.y = dragY;
+			});
+		}
     }
 
     update() {

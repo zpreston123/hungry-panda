@@ -1,13 +1,13 @@
 import Phaser from 'phaser';
 
 class Player extends Phaser.Physics.Arcade.Sprite {
-	constructor(config) {
-		super(config.scene, config.x, config.y, 'icons', 21);
+	constructor(scene, x, y, texture, frame) {
+		super(scene, x, y, texture, frame);
+		scene.add.existing(this);
+		scene.physics.add.existing(this);
+		this.setCollideWorldBounds(true);
 		this.setScale(3);
 		this.speed = 4;
-		config.scene.add.existing(this);
-		config.scene.physics.add.existing(this);
-		this.setCollideWorldBounds(true);
 	}
 }
 
