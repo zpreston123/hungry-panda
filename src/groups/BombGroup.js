@@ -13,8 +13,12 @@ class BombGroup extends Phaser.Physics.Arcade.Group {
                 Phaser.Math.Between(20, config.x-20),
                 Phaser.Math.Between(100, config.y-20)
             );
-            bomb.setScale(3);
+            bomb.setScale(2);
             bomb.setCollideWorldBounds(true);
+            if (config.bounce) {
+                bomb.setVelocity(100, 100);
+                bomb.setBounce(1);
+            }
         });
         config.scene.anims.create({
         	key: 'explode',

@@ -1,11 +1,9 @@
 import Phaser from 'phaser';
 import config from '../config/game';
-import fruitSound from '../assets/sounds/se2.wav';
-import bombSound from '../assets/sounds/bomb1.wav';
-import iconSpritesheet from '../assets/images/icon0.png';
-import explosionSpritesheet from '../assets/images/explosion.png';
-import Player from '../sprites/Player';
-import { FruitGroup, BombGroup } from '../groups';
+import { BombSound, FruitSound } from '../assets/sounds';
+import { ExplosionSpritesheet, IconSpritesheet, PlayerSpritesheet } from '../assets/images';
+import { Explosion, Player } from '../sprites';
+import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
 class GameplayScene extends Phaser.Scene {
@@ -19,10 +17,11 @@ class GameplayScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.audio('fruit-sound', fruitSound);
-		this.load.audio('bomb-sound', bombSound);
-		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
-		this.load.spritesheet('explosion', explosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
+		this.load.audio('fruit-sound', FruitSound);
+		this.load.audio('bomb-sound', BombSound);
+		this.load.spritesheet('icons', IconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
+		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
+		this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
 	}
 
 	create() {
@@ -52,13 +51,42 @@ class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff'}
 		});
 
-		this.player = new Player({
+		this.player = new Player(this, config.width / 2, config.height / 2, 'player');
+
+		this.fruitGroup = new FruitGroup({
+			world: this.physics.world,
 			scene: this,
-			x: config.width / 2,
-			y: config.height / 2
+			x: config.width,
+			y: config.height,
+			bounce: this.level.bounceFruit
 		});
 
-		this.cursorKeys = this.input.keyboard.createCursorKeys();
+		this.bombGroup = new BombGroup({
+			world: this.physics.world,
+			scene: this,
+			x: config.width,
+			y: config.height,
+			total: this.level.totalBombs,
+			bounce: this.level.bounceBombs
+		});
+
+		// detect collision between the player and fruit
+		this.physics.add.collider(this.player, this.fruitGroup, (player, fruit) => {
+			this.scoreLabel.increaseScore();
+			this.sound.add('fruit-sound').play();
+			fruit.destroy();
+		}, null, this);
+
+        // detect collision between the player and bomb
+        this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
+        	this.healthLabel.decrementHealth();
+        	this.scoreLabel.decreaseScore();
+        	this.sound.add('bomb-sound').play();
+        	let explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
+        	bomb.destroy();
+        }, null, this);
+
+        this.cursorKeys = this.input.keyboard.createCursorKeys();
 
 		// make player draggable on mobile devices
 		if (config.scale) {
@@ -69,44 +97,11 @@ class GameplayScene extends Phaser.Scene {
 				gameObject.y = dragY;
 			});
 		}
-
-		this.fruitGroup = new FruitGroup({
-			world: this.physics.world,
-			scene: this,
-			x: config.width,
-			y: config.height
-		});
-
-		// detect collision between the player and fruit
-		this.physics.add.overlap(this.player, this.fruitGroup, (player, fruit) => {
-			this.scoreLabel.increaseScore();
-			this.sound.add('fruit-sound').play();
-			fruit.destroy();
-		}, null, this);
-
-		this.bombGroup = new BombGroup({
-			world: this.physics.world,
-			scene: this,
-			x: config.width,
-			y: config.height,
-			total: this.level.totalBombs
-		});
-
-        // detect collision between the player and bomb
-        this.physics.add.overlap(this.player, this.bombGroup, (player, bomb) => {
-        	this.healthLabel.decrementHealth();
-        	this.scoreLabel.decreaseScore();
-        	this.sound.add('bomb-sound').play();
-        	this.explosion = this.physics.add.sprite(bomb.x, bomb.y, 'explosion');
-        	this.explosion.setScale(2);
-        	bomb.destroy();
-        	this.explosion.play('explode');
-        }, null, this);
     }
 
     update() {
     	if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
-    		this.scene.start('Game Over');
+    		this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
     	} else {
     		this.timeLabel.decrementTime();
     	}
@@ -124,13 +119,21 @@ class GameplayScene extends Phaser.Scene {
 
     	if (this.cursorKeys.left.isDown) {
     		this.player.setVelocityX(-300);
+		    this.player.anims.play('left_anim', true);
+		    this.player.flipX = true;
     	} else if (this.cursorKeys.right.isDown) {
     		this.player.setVelocityX(300);
+		    this.player.anims.play('right_anim', true);
+		    this.player.flipX = false;
     	} else if (this.cursorKeys.up.isDown) {
     		this.player.setVelocityY(-300);
+		    this.player.anims.play('up_anim', true);
     	} else if (this.cursorKeys.down.isDown) {
     		this.player.setVelocityY(300);
-    	}
+		    this.player.anims.play('down_anim', true);
+    	} else {
+	        this.player.anims.stop();
+	    }
     }
 }
 
