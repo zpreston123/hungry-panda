@@ -1,12 +1,9 @@
 import Phaser from 'phaser';
 import config from '../config/game';
-import fruitSound from '../assets/sounds/se2.wav';
-import bombSound from '../assets/sounds/bomb1.wav';
-import iconSpritesheet from '../assets/images/icon0.png';
-import explosionSpritesheet from '../assets/images/explosion.png';
-import playerSpritesheet from '../assets/images/panda.png';
-import { Player, Explosion } from '../sprites';
-import { FruitGroup, BombGroup } from '../groups';
+import { BombSound, FruitSound } from '../assets/sounds';
+import { ExplosionSpritesheet, IconSpritesheet, PlayerSpritesheet } from '../assets/images';
+import { Explosion, Player } from '../sprites';
+import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
 class GameplayScene extends Phaser.Scene {
@@ -20,11 +17,11 @@ class GameplayScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.audio('fruit-sound', fruitSound);
-		this.load.audio('bomb-sound', bombSound);
-		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
-		this.load.spritesheet('explosion', explosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
-		this.load.spritesheet('player', playerSpritesheet, { frameWidth: 32, frameHeight: 32});
+		this.load.audio('fruit-sound', FruitSound);
+		this.load.audio('bomb-sound', BombSound);
+		this.load.spritesheet('icons', IconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
+		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
+		this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
 	}
 
 	create() {

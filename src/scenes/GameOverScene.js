@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import gameOverImage from '../assets/images/end.png';
-import gameOverSound from '../assets/sounds/se7.wav';
+import GameOverImage from '../assets/images/end.png';
+import GameOverSound from '../assets/sounds/se7.wav';
 
 class GameOverScene extends Phaser.Scene {
 	constructor() {
@@ -13,8 +13,8 @@ class GameOverScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.image('game-over', gameOverImage);
-		this.load.audio('game-over-sound', gameOverSound);
+		this.load.image('game-over', GameOverImage);
+		this.load.audio('game-over-sound', GameOverSound);
 	}
 
 	create() {

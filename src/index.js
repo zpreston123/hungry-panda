@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { config, levels } from './config';
-import { StartScene, GameplayScene, ClearScene, GameOverScene } from './scenes';
+import { ClearScene, GameOverScene, GameplayScene, StartScene } from './scenes';
 
 class Game extends Phaser.Game {
 	constructor(config) {
