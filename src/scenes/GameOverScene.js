@@ -24,7 +24,6 @@ class GameOverScene extends Phaser.Scene {
 		this.restartText.setOrigin(0.5);
 		this.restartText.setInteractive();
 		this.restartText.on('pointerdown', () => {
-			console.log('clicked');
 			this.scene.start('Gameplay', { levels: this.levels, level: this.firstLevel });
 		});
 	}
