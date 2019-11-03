@@ -4,6 +4,7 @@ import fruitSound from '../assets/sounds/se2.wav';
 import bombSound from '../assets/sounds/bomb1.wav';
 import iconSpritesheet from '../assets/images/icon0.png';
 import explosionSpritesheet from '../assets/images/explosion.png';
+import playerSpritesheet from '../assets/images/panda.png';
 import { Player, Explosion } from '../sprites';
 import { FruitGroup, BombGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
@@ -23,6 +24,7 @@ class GameplayScene extends Phaser.Scene {
 		this.load.audio('bomb-sound', bombSound);
 		this.load.spritesheet('icons', iconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
 		this.load.spritesheet('explosion', explosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
+		this.load.spritesheet('player', playerSpritesheet, { frameWidth: 32, frameHeight: 32});
 	}
 
 	create() {
@@ -52,7 +54,7 @@ class GameplayScene extends Phaser.Scene {
 			style: { fontSize: '32px', fill: '#fff'}
 		});
 
-		this.player = new Player(this, config.width / 2, config.height / 2, 'icons', 21);
+		this.player = new Player(this, config.width / 2, config.height / 2, 'player');
 
 		this.fruitGroup = new FruitGroup({
 			world: this.physics.world,
@@ -120,13 +122,21 @@ class GameplayScene extends Phaser.Scene {
 
     	if (this.cursorKeys.left.isDown) {
     		this.player.setVelocityX(-300);
+		    this.player.anims.play('left_anim', true);
+		    this.player.flipX = true;
     	} else if (this.cursorKeys.right.isDown) {
     		this.player.setVelocityX(300);
+		    this.player.anims.play('right_anim', true);
+		    this.player.flipX = false;
     	} else if (this.cursorKeys.up.isDown) {
     		this.player.setVelocityY(-300);
+		    this.player.anims.play('up_anim', true);
     	} else if (this.cursorKeys.down.isDown) {
     		this.player.setVelocityY(300);
-    	}
+		    this.player.anims.play('down_anim', true);
+    	} else {
+	        this.player.anims.stop();
+	    }
     }
 }
 
