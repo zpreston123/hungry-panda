@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 		scene.add.existing(this);
 		scene.physics.add.existing(this);
 		this.setCollideWorldBounds(true);
-		this.setScale(3);
+		this.setScale(2);
 		this.speed = 4;
 		scene.anims.create({
 			key: 'left_anim',
