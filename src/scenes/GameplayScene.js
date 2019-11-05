@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import config from '../config/game';
 import { BombSound, FruitSound } from '../assets/sounds';
-import { ExplosionSpritesheet, FruitAndVegSpritesheet, IconSpritesheet, PlayerSpritesheet } from '../assets/images';
+import { ExplosionSpritesheet, BombSprite, FruitAndVegSpritesheet, PlayerSpritesheet } from '../assets/images';
 import { Explosion, Player } from '../sprites';
 import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
@@ -19,7 +19,7 @@ class GameplayScene extends Phaser.Scene {
 	preload() {
 		this.load.audio('fruit-sound', FruitSound);
 		this.load.audio('bomb-sound', BombSound);
-		this.load.spritesheet('icons', IconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
+		this.load.image('bomb', BombSprite);
 		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
 		this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
 		this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
