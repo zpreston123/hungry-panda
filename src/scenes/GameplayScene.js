@@ -20,7 +20,7 @@ class GameplayScene extends Phaser.Scene {
 		this.load.audio('fruit-sound', FruitSound);
 		this.load.audio('bomb-sound', BombSound);
 		this.load.spritesheet('icons', IconSpritesheet, { frameWidth: 16, frameHeight: 16 }, 71);
-		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 16, frameHeight: 16 });
+		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
 		this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
 		this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
 	}
