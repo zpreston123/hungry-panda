@@ -25,11 +25,15 @@ class ClearScene extends Phaser.Scene {
 		this.sound.add('clear-sound').play();
 
 		if (this.nextLevel) {
-			this.nextLevelText = this.add.text(this.cameras.main.width / 2, (this.cameras.main.height / 2) + 120, 'Go to next level', { fontSize: '32px', fill: '#fff' });
+			this.nextLevelText = this.add.text(this.cameras.main.width / 2, (this.cameras.main.height / 2) + 120, 'Go to the next level', { fontSize: '32px', fill: '#fff' });
 			this.nextLevelText.setOrigin(0.5);
-			this.nextLevelText.setInteractive();
-			this.nextLevelText.on('pointerdown', () => {
+			this.input.on('pointerdown', () => {
 				this.scene.start('Gameplay', { levels: this.levels, level: this.nextLevel });
+			});
+			this.input.keyboard.on('keydown', input => {
+				if (input.key == 'Enter') {
+					this.scene.start('Gameplay', { levels: this.levels, level: this.nextLevel });
+				}
 			});
 		} else {
 			this.nextLevelText = this.add.text(this.cameras.main.width / 2, (this.cameras.main.height / 2) + 120, 'YOU COMPLETED THE GAME!', { fontSize: '32px', fill: '#fff' });

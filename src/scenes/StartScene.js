@@ -17,11 +17,9 @@ class StartScene extends Phaser.Scene {
 
 	create() {
 		this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'start');
-
-		this.input.once('pointerdown', event => {
+		this.input.on('pointerdown', () => {
 			this.scene.start('Gameplay', { level: this.level, levels: this.levels });
-		}, this);
-
+		});
 		this.input.keyboard.on('keydown', input => {
 			if (input.key == 'Enter') {
 				this.scene.start('Gameplay', { level: this.level, levels: this.levels });
