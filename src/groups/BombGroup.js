@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 
 class BombGroup extends Phaser.Physics.Arcade.Group {
-	constructor(config) {
-		super(config.world, config.scene);
+    constructor(config) {
+        super(config.world, config.scene);
         this.createMultiple({
             key: 'bomb',
             repeat: config.total
@@ -20,11 +20,11 @@ class BombGroup extends Phaser.Physics.Arcade.Group {
             }
         });
         config.scene.anims.create({
-        	key: 'explode',
-        	frames: config.scene.anims.generateFrameNumbers('explosion'),
-        	frameRate: 20,
-        	repeat: 0,
-        	hideOnComplete: true
+            key: 'explode',
+            frames: config.scene.anims.generateFrameNumbers('explosion'),
+            frameRate: 20,
+            repeat: 0,
+            hideOnComplete: true
         });
     }
 }
