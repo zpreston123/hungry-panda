@@ -52,8 +52,6 @@ class GameplayScene extends Phaser.Scene {
             style: { fontSize: '32px', fill: '#fff'}
         });
 
-        this.player = new Player(this, config.width / 2, config.height / 2, 'player');
-
         this.fruitGroup = new FruitGroup({
             world: this.physics.world,
             scene: this,
@@ -71,15 +69,22 @@ class GameplayScene extends Phaser.Scene {
             bounce: this.level.bounceBombs
         });
 
+        this.player = new Player(this, config.width / 2, config.height / 2, 'player');
+
+        if (this.levels.indexOf(this.level) > 0) { // levels 2 and 3
+            this.player.setAlpha(0);
+            this.tweens.add({ targets: this.player, alpha: 1, duration: 3000 });
+        }
+
         // detect collision between the player and fruit
-        this.physics.add.collider(this.player, this.fruitGroup, (player, fruit) => {
+        this.playerFruitCollider = this.physics.add.collider(this.player, this.fruitGroup, (player, fruit) => {
             this.scoreLabel.increaseScore();
             this.sound.add('fruit-sound').play();
             fruit.destroy();
         }, null, this);
 
         // detect collision between the player and bomb
-        this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
+        this.playerBombCollider = this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
             this.healthLabel.decrementHealth();
             this.scoreLabel.decreaseScore();
             this.hurtPlayer();
@@ -102,6 +107,14 @@ class GameplayScene extends Phaser.Scene {
     }
 
     update() {
+        if (this.tweens.isTweening(this.player)) {
+            this.playerFruitCollider.active = false;
+            this.playerBombCollider.active = false;
+        } else {
+            this.playerFruitCollider.active = true;
+            this.playerBombCollider.active = true;
+        }
+
         if (this.timeLabel.timer == 0 || this.healthLabel.currentHealth == 0) {
             this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
         } else {
