@@ -82,6 +82,7 @@ class GameplayScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
             this.healthLabel.decrementHealth();
             this.scoreLabel.decreaseScore();
+            this.hurtPlayer();
             this.sound.add('bomb-sound').play();
             let explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
             bomb.destroy();
@@ -135,6 +136,13 @@ class GameplayScene extends Phaser.Scene {
         } else {
             this.player.anims.stop();
         }
+    }
+
+    hurtPlayer() {
+        this.player.setTint(0xff0000);
+        this.time.addEvent({ delay: 250, callback: event => {
+            this.player.clearTint();
+        }, callbackScope: this });
     }
 }
 
