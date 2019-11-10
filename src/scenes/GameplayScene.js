@@ -89,9 +89,11 @@ class GameplayScene extends Phaser.Scene {
             this.scoreLabel.decreaseScore();
             this.hurtPlayer();
             this.sound.add('bomb-sound').play();
-            let explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
+            const explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
             bomb.destroy();
         }, null, this);
+
+        this.highScore = localStorage.highScore;
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
 
@@ -107,6 +109,10 @@ class GameplayScene extends Phaser.Scene {
     }
 
     update() {
+        if (this.scoreLabel.score > localStorage.highScore) {
+            localStorage.highScore = this.scoreLabel.score;
+        }
+
         if (this.tweens.isTweening(this.player)) {
             this.playerFruitCollider.active = false;
             this.playerBombCollider.active = false;
@@ -126,8 +132,7 @@ class GameplayScene extends Phaser.Scene {
         }
 
         if (this.fruitGroup.getLength() == 0) {
-            let index = this.levels.indexOf(this.level) + 1;
-            this.scene.start('Clear', { score: this.scoreLabel.score, nextLevel: this.levels[index], levels: this.levels });
+            this.scene.start('Clear', { score: this.scoreLabel.score, highScore: this.highScore, nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
         }
 
         this.player.setVelocity(0);
