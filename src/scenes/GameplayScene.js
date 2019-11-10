@@ -96,16 +96,6 @@ class GameplayScene extends Phaser.Scene {
         this.highScore = localStorage.highScore;
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
-
-        // make player draggable on mobile devices
-        if (config.scale) {
-            this.player.setInteractive();
-            this.input.setDraggable(this.player);
-            this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
-                gameObject.x = dragX;
-                gameObject.y = dragY;
-            });
-        }
     }
 
     update() {
@@ -137,22 +127,28 @@ class GameplayScene extends Phaser.Scene {
 
         this.player.setVelocity(0);
 
-        if (this.cursorKeys.left.isDown) {
+        // check keyboard and touch input
+        if ((this.cursorKeys.left.isDown) || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.x < this.player.body.x - this.player.body.width))) {
             this.player.setVelocityX(-300);
             this.player.anims.play('left_anim', true);
             this.player.flipX = true;
-        } else if (this.cursorKeys.right.isDown) {
+        } else if (this.cursorKeys.right.isDown || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.x > this.player.body.x + this.player.body.width))) {
             this.player.setVelocityX(300);
             this.player.anims.play('right_anim', true);
             this.player.flipX = false;
-        } else if (this.cursorKeys.up.isDown) {
+        } else if (this.cursorKeys.up.isDown || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.y < this.player.body.y - this.player.body.height))) {
             this.player.setVelocityY(-300);
             this.player.anims.play('up_anim', true);
-        } else if (this.cursorKeys.down.isDown) {
+        } else if (this.cursorKeys.down.isDown || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.y > this.player.body.y + this.player.body.height))) {
             this.player.setVelocityY(300);
             this.player.anims.play('down_anim', true);
         } else {
-            this.player.anims.stop();
+            if (
+                (this.cursorKeys.left.isUp || this.cursorKeys.right.isUp || this.cursorKeys.up.isUp || this.cursorKeys.down.isUp) ||
+                (this.input.pointer1.isUp || this.input.pointer2.isUp)
+            ) {
+                this.player.anims.stop();
+            }
         }
     }
 
