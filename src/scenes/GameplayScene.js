@@ -101,11 +101,11 @@ class GameplayScene extends Phaser.Scene {
 
         if (this.sys.game.device.os.android || this.sys.game.device.os.iOS) {
             this.joyStick = this.plugins.get('virtualjoystick-plugin').add(this, {
-                x: config.width - 120,
-                y: config.height - 120,
-                radius: 70,
-                base: this.add.graphics().fillStyle(0x888888).fillCircle(0, 0, 100),
-                thumb: this.add.graphics().fillStyle(0xcccccc).fillCircle(0, 0,50)
+                x: config.width - 200,
+                y: config.height - 230,
+                radius: 120,
+                base: this.add.graphics().fillStyle(0x888888).fillCircle(0, 0, 150),
+                thumb: this.add.graphics().fillStyle(0xcccccc).fillCircle(0, 0, 80)
             });
         }
     }
