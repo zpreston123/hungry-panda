@@ -104,7 +104,7 @@ class GameplayScene extends Phaser.Scene {
                 x: config.width - 200,
                 y: config.height - 230,
                 radius: 120,
-                base: this.add.graphics().fillStyle(0x888888).fillCircle(0, 0, 150),
+                base: this.add.graphics().fillStyle(0x888888, 0.35).fillCircle(0, 0, 150),
                 thumb: this.add.graphics().fillStyle(0xcccccc).fillCircle(0, 0, 80)
             });
         }
