@@ -99,7 +99,7 @@ class GameplayScene extends Phaser.Scene {
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
 
-        if (this.sys.game.device.os.android || this.sys.game.device.os.ios) {
+        if (this.sys.game.device.os.android || this.sys.game.device.os.iOS) {
             this.joyStick = this.plugins.get('virtualjoystick-plugin').add(this, {
                 x: config.width - 120,
                 y: config.height - 120,
@@ -144,14 +144,14 @@ class GameplayScene extends Phaser.Scene {
             this.player.setVelocityX(-300);
             this.player.anims.play('left_anim', true);
             this.player.flipX = true;
-        } else if (this.cursorKeys.right.isDown || (this.joysStick && this.joyStick.right)) {
+        } else if (this.cursorKeys.right.isDown || (this.joyStick && this.joyStick.right)) {
             this.player.setVelocityX(300);
             this.player.anims.play('right_anim', true);
             this.player.flipX = false;
-        } else if (this.cursorKeys.up.isDown || (this.joysStick && this.joyStick.up)) {
+        } else if (this.cursorKeys.up.isDown || (this.joyStick && this.joyStick.up)) {
             this.player.setVelocityY(-300);
             this.player.anims.play('up_anim', true);
-        } else if (this.cursorKeys.down.isDown || (this.joysStick && this.joyStick.down)) {
+        } else if (this.cursorKeys.down.isDown || (this.joyStick && this.joyStick.down)) {
             this.player.setVelocityY(300);
             this.player.anims.play('down_anim', true);
         } else {
