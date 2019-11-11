@@ -5,6 +5,7 @@ import { ExplosionSpritesheet, BombSprite, FruitAndVegSpritesheet, PlayerSprites
 import { Explosion, Player } from '../sprites';
 import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
+import VirtualJoyStickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 class GameplayScene extends Phaser.Scene {
     constructor() {
@@ -23,6 +24,7 @@ class GameplayScene extends Phaser.Scene {
         this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
+        this.load.plugin('virtualjoystick-plugin', VirtualJoyStickPlugin, true);
     }
 
     create() {
@@ -96,6 +98,16 @@ class GameplayScene extends Phaser.Scene {
         this.highScore = localStorage.highScore;
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+        if (this.sys.game.device.os.android || this.sys.game.device.os.ios) {
+            this.joyStick = this.plugins.get('virtualjoystick-plugin').add(this, {
+                x: config.width - 120,
+                y: config.height - 120,
+                radius: 70,
+                base: this.add.graphics().fillStyle(0x888888).fillCircle(0, 0, 100),
+                thumb: this.add.graphics().fillStyle(0xcccccc).fillCircle(0, 0,50)
+            });
+        }
     }
 
     update() {
@@ -127,28 +139,23 @@ class GameplayScene extends Phaser.Scene {
 
         this.player.setVelocity(0);
 
-        // check keyboard and touch input
-        if ((this.cursorKeys.left.isDown) || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.x < this.player.body.x - this.player.body.width))) {
+        // check keyboard and joystick (mobile) input
+        if (this.cursorKeys.left.isDown || (this.joyStick && this.joyStick.left)) {
             this.player.setVelocityX(-300);
             this.player.anims.play('left_anim', true);
             this.player.flipX = true;
-        } else if (this.cursorKeys.right.isDown || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.x > this.player.body.x + this.player.body.width))) {
+        } else if (this.cursorKeys.right.isDown || (this.joysStick && this.joyStick.right)) {
             this.player.setVelocityX(300);
             this.player.anims.play('right_anim', true);
             this.player.flipX = false;
-        } else if (this.cursorKeys.up.isDown || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.y < this.player.body.y - this.player.body.height))) {
+        } else if (this.cursorKeys.up.isDown || (this.joysStick && this.joyStick.up)) {
             this.player.setVelocityY(-300);
             this.player.anims.play('up_anim', true);
-        } else if (this.cursorKeys.down.isDown || ((this.input.pointer1.isDown || this.input.pointer2.isDown) && (this.input.y > this.player.body.y + this.player.body.height))) {
+        } else if (this.cursorKeys.down.isDown || (this.joysStick && this.joyStick.down)) {
             this.player.setVelocityY(300);
             this.player.anims.play('down_anim', true);
         } else {
-            if (
-                (this.cursorKeys.left.isUp || this.cursorKeys.right.isUp || this.cursorKeys.up.isUp || this.cursorKeys.down.isUp) ||
-                (this.input.pointer1.isUp || this.input.pointer2.isUp)
-            ) {
-                this.player.anims.stop();
-            }
+            this.player.anims.stop();
         }
     }
 
