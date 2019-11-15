@@ -19,13 +19,6 @@ class BombGroup extends Phaser.Physics.Arcade.Group {
                 bomb.setBounce(1);
             }
         });
-        config.scene.anims.create({
-            key: 'explode',
-            frames: config.scene.anims.generateFrameNumbers('explosion'),
-            frameRate: 20,
-            repeat: 0,
-            hideOnComplete: true
-        });
     }
 }
 
