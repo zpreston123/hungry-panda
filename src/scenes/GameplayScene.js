@@ -30,6 +30,8 @@ class GameplayScene extends Phaser.Scene {
     create() {
         this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
+        this.gameTime = 20;
+
         this.scoreLabel = new ScoreLabel({
             scene: this,
             x: 16,
@@ -42,9 +44,11 @@ class GameplayScene extends Phaser.Scene {
             scene: this,
             x: 16,
             y: 50,
-            text: 'Time:',
+            text: `Time: ${this.gameTime}`,
             style: { fontSize: '32px', fill: '#fff' }
         });
+
+        this.time.addEvent({ delay: 1000, callback: this.decrementTime, callbackScope: this, loop: true });
 
         this.healthLabel = new HealthLabel({
             scene: this,
@@ -123,10 +127,8 @@ class GameplayScene extends Phaser.Scene {
             this.playerBombCollider.active = true;
         }
 
-        if (this.timeLabel.time == 0 || this.healthLabel.currentHealth == 0) {
+        if (this.gameTime == 0 || this.healthLabel.currentHealth == 0) {
             this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
-        } else {
-            this.timeLabel.decrementTime();
         }
 
         if (this.scoreLabel.score < 0) {
@@ -164,6 +166,11 @@ class GameplayScene extends Phaser.Scene {
         this.time.addEvent({ delay: 250, callback: event => {
             this.player.clearTint();
         }, callbackScope: this });
+    }
+
+    decrementTime() {
+        this.gameTime--;
+        this.timeLabel.text = `Time: ${this.gameTime}`;
     }
 }
 
