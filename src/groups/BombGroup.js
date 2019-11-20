@@ -15,7 +15,7 @@ class BombGroup extends Phaser.Physics.Arcade.Group {
             bomb.setScale(1.5);
             bomb.setCollideWorldBounds(true);
             if (config.bounce) {
-                bomb.setVelocity(100, 100);
+                bomb.setVelocity(180, 120);
                 bomb.setBounce(1);
             }
         });
