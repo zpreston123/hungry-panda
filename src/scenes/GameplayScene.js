@@ -38,7 +38,7 @@ class GameplayScene extends Phaser.Scene {
             scene: this,
             x: 16,
             y: 16,
-            text: 'Score:',
+            text: `Score: ${this.score}`,
             style: { fontSize: '32px', fill: '#fff' }
         });
 
@@ -56,7 +56,7 @@ class GameplayScene extends Phaser.Scene {
             scene: this,
             x: 610,
             y: 16,
-            text: 'Health:',
+            text: `Health: ${this.health}`,
             style: { fontSize: '32px', fill: '#fff'}
         });
 
