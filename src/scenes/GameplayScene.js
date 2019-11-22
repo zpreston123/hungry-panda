@@ -103,7 +103,7 @@ class GameplayScene extends Phaser.Scene {
             bomb.destroy();
         }, null, this);
 
-        this.highScore = localStorage.highScore;
+        this.highScore = localStorage.getItem('highScore');
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
 
@@ -119,8 +119,8 @@ class GameplayScene extends Phaser.Scene {
     }
 
     update() {
-        if (this.score > localStorage.highScore) {
-            localStorage.highScore = this.score;
+        if (this.score > localStorage.getItem('highScore')) {
+            localStorage.setItem('highScore', this.score);
         }
 
         if (this.tweens.isTweening(this.player)) {
