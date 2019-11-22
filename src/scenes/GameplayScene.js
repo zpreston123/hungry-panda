@@ -103,8 +103,6 @@ class GameplayScene extends Phaser.Scene {
             bomb.destroy();
         }, null, this);
 
-        this.highScore = localStorage.getItem('highScore');
-
         this.cursorKeys = this.input.keyboard.createCursorKeys();
 
         if (this.sys.game.device.os.android || this.sys.game.device.os.iOS) {
@@ -119,7 +117,7 @@ class GameplayScene extends Phaser.Scene {
     }
 
     update() {
-        if (this.score > localStorage.getItem('highScore')) {
+        if ((localStorage.getItem('highScore') === null) || (this.score > localStorage.getItem('highScore'))) {
             localStorage.setItem('highScore', this.score);
         }
 
@@ -140,7 +138,7 @@ class GameplayScene extends Phaser.Scene {
         }
 
         if (this.fruitGroup.getLength() == 0) {
-            this.scene.start('Clear', { score: this.score, highScore: this.highScore, nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
+            this.scene.start('Clear', { score: this.score, highScore: localStorage.getItem('highScore'), nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
         }
 
         this.player.setVelocity(0);
