@@ -31,12 +31,16 @@ class GameplayScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
         this.gameTime = 20;
+        this.health = 3;
+        this.score = 0;
+
+        this.physics.world.setBounds(0, 130, config.width, config.height - 130);
 
         this.scoreLabel = new ScoreLabel({
             scene: this,
             x: 16,
             y: 16,
-            text: 'Score:',
+            text: `Score: ${this.score}`,
             style: { fontSize: '32px', fill: '#fff' }
         });
 
@@ -48,13 +52,13 @@ class GameplayScene extends Phaser.Scene {
             style: { fontSize: '32px', fill: '#fff' }
         });
 
-        this.time.addEvent({ delay: 1000, callback: this.decrementTime, callbackScope: this, loop: true });
+        this.time.addEvent({ delay: 1000, callback: this.decreaseTime, callbackScope: this, loop: true });
 
         this.healthLabel = new HealthLabel({
             scene: this,
             x: 610,
             y: 16,
-            text: 'Health:',
+            text: `Health: ${this.health}`,
             style: { fontSize: '32px', fill: '#fff'}
         });
 
@@ -84,15 +88,15 @@ class GameplayScene extends Phaser.Scene {
 
         // detect collision between the player and fruit
         this.playerFruitCollider = this.physics.add.collider(this.player, this.fruitGroup, (player, fruit) => {
-            this.scoreLabel.increaseScore();
+            this.increaseScore();
             this.sound.add('fruit-sound').play();
             fruit.destroy();
         }, null, this);
 
         // detect collision between the player and bomb
         this.playerBombCollider = this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
-            this.healthLabel.decrementHealth();
-            this.scoreLabel.decreaseScore();
+            this.decreaseHealth();
+            this.decreaseScore();
             this.hurtPlayer();
             this.sound.add('bomb-sound').play();
             const explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
@@ -115,8 +119,8 @@ class GameplayScene extends Phaser.Scene {
     }
 
     update() {
-        if (this.scoreLabel.score > localStorage.highScore) {
-            localStorage.highScore = this.scoreLabel.score;
+        if (this.score > localStorage.highScore) {
+            localStorage.highScore = this.score;
         }
 
         if (this.tweens.isTweening(this.player)) {
@@ -127,16 +131,16 @@ class GameplayScene extends Phaser.Scene {
             this.playerBombCollider.active = true;
         }
 
-        if (this.gameTime == 0 || this.healthLabel.currentHealth == 0) {
+        if (this.time == 0 || this.health == 0) {
             this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
         }
 
-        if (this.scoreLabel.score < 0) {
-            this.scoreLabel.resetScore();
+        if (this.score < 0) {
+            this.resetScore();
         }
 
         if (this.fruitGroup.getLength() == 0) {
-            this.scene.start('Clear', { score: this.scoreLabel.score, highScore: this.highScore, nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
+            this.scene.start('Clear', { score: this.score, highScore: this.highScore, nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
         }
 
         this.player.setVelocity(0);
@@ -168,9 +172,29 @@ class GameplayScene extends Phaser.Scene {
         }, callbackScope: this });
     }
 
-    decrementTime() {
+    increaseScore() {
+        this.score += 10;
+        this.scoreLabel.text = `Score: ${this.score}`;
+    }
+
+    decreaseTime() {
         this.gameTime--;
         this.timeLabel.text = `Time: ${this.gameTime}`;
+    }
+
+    decreaseHealth() {
+        this.health--;
+        this.healthLabel.text = `Health: ${this.health}`;
+    }
+
+    decreaseScore() {
+        this.score -= 5;
+        this.scoreLabel.text = `Score: ${this.score}`;
+    }
+
+    resetScore() {
+        this.score = 0;
+        this.scoreLabel.text = `Score: ${this.score}`;
     }
 }
 
