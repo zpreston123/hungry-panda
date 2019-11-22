@@ -34,6 +34,8 @@ class GameplayScene extends Phaser.Scene {
         this.health = 3;
         this.score = 0;
 
+        this.physics.world.setBounds(0, 130, config.width, config.height - 130);
+
         this.scoreLabel = new ScoreLabel({
             scene: this,
             x: 16,
