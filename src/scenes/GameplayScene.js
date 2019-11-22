@@ -31,8 +31,8 @@ class GameplayScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor(this.level.backgroundColor);
 
         this.gameTime = 20;
-        this.health = 3;
         this.score = 0;
+        this.health = this.level.lives;
 
         this.physics.world.setBounds(0, 130, config.width, config.height - 130);
 
