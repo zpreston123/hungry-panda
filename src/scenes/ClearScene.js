@@ -39,7 +39,7 @@ class ClearScene extends Phaser.Scene {
                 }
             });
         } else {
-            this.nextLevelText = this.add.text(this.cameras.main.width / 2, (this.cameras.main.height / 2) + 120, 'YOU COMPLETED THE GAME!', { fontSize: '32px', fill: '#fff' });
+            this.nextLevelText = this.add.text(this.cameras.main.width / 2, (this.cameras.main.height / 2) + 140, 'YOU COMPLETED THE GAME!', { fontSize: '32px', fill: '#fff' });
             this.nextLevelText.setOrigin(0.5);
         }
     }
