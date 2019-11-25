@@ -1,6 +1,14 @@
 export { default as ClearImage } from './clear.png';
+export { default as GameOverImage } from './end.png';
 export { default as ExplosionSpritesheet } from './explosion.png';
 export { default as FruitAndVegSpritesheet } from './fruitnveg64wh37.png';
 export { default as BombSprite } from './mine.png';
 export { default as PlayerSpritesheet } from './panda.png';
 export { default as StartImage } from './start.png';
+export { default as JungleBackground } from './jungle-bg.jpg';
+export { default as Logo } from './logo.png';
+export { default as Title } from './title.png';
+export { default as Checkbox } from './grey_box.png';
+export { default as Checkedbox } from './blue_boxCheckmark.png';
+export { default as Button01 } from './blue_button02.png';
+export { default as Button02 } from './blue_button03.png';
