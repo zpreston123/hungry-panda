@@ -1,11 +1,7 @@
 import Phaser from 'phaser';
 import config from '../config/game';
-import { BombSound, FruitSound } from '../assets/sounds';
-import { ExplosionSpritesheet, BombSprite, FruitAndVegSpritesheet, PlayerSpritesheet } from '../assets/images';
-import { Explosion, Player } from '../sprites';
 import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
-import VirtualJoyStickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 class GameplayScene extends Phaser.Scene {
     constructor() {
@@ -15,16 +11,6 @@ class GameplayScene extends Phaser.Scene {
     init(data) {
         this.levels = data.levels;
         this.level = data.level;
-    }
-
-    preload() {
-        this.load.audio('fruit-sound', FruitSound);
-        this.load.audio('bomb-sound', BombSound);
-        this.load.image('bomb', BombSprite);
-        this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
-        this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
-        this.load.plugin('virtualjoystick-plugin', VirtualJoyStickPlugin, true);
     }
 
     create() {
