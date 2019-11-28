@@ -18,14 +18,6 @@ class PreloaderScene extends Phaser.Scene {
 		this.readyCount = 0;
 	}
 
-	ready() {
-		this.scene.start('Title');
-		this.readyCount++;
-		if (this.readyCount === 2) {
-			this.scene.start('Title');
-		}
-	}
-
 	preload() {
 	    // add logo image
 	    this.add.image(config.width / 2, config.height / 2, 'logo');
@@ -68,21 +60,14 @@ class PreloaderScene extends Phaser.Scene {
 			progressBar.fillRect(310, 280, 300 * value, 30);
 		});
 
-		// update file progress text
-		this.load.on('fileprogress', file => {
-			assetText.setText('Loading asset: ' + file.key);
-		});
-
 		// remove progress bar when complete
 		this.load.on('complete', () => {
 			progressBar.destroy();
 			progressBox.destroy();
 			loadingText.destroy();
 			percentText.destroy();
-			this.ready();
+			this.scene.start('Title');
 		});
-
-		this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
 
 		// load assets needed in our game
 		this.load.audio('bgMusic', BackgroundMusic);
