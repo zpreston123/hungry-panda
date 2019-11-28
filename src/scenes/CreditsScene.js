@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import config from '../config/game';
+import Button from '../Objects/Button';
 
 class CreditsScene extends Phaser.Scene {
 	constructor() {
@@ -16,7 +17,9 @@ class CreditsScene extends Phaser.Scene {
 
 		this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });
 		this.madeByText = this.add.text(0, 0, 'Created By: Zach Preston', { fontSize: '26px', fill: '#fff' });
-		this.zone = this.add.zone(config.width/2, config.height/2, config.width, config.height);
+		this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+
+		this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
 		Phaser.Display.Align.In.Center(
 			this.creditsText,
@@ -28,30 +31,13 @@ class CreditsScene extends Phaser.Scene {
 			this.zone
 		);
 
-		this.madeByText.setY(1000);
+		Phaser.Display.Align.In.Center(
+			this.menuButton,
+			this.zone
+		);
 
-		this.creditsTween = this.tweens.add({
-			targets: this.creditsText,
-			y: -100,
-			ease: 'fade',
-			duration: 3000,
-			delay: 1000,
-			onComplete: () => {
-				this.destroy();
-			}
-		});
-
-		this.madeByTween = this.tweens.add({
-			targets: this.madeByText,
-			y: -300,
-			ease: 'Power1',
-			duration: 8000,
-			delay: 1000,
-			onComplete: () => {
-				this.madeByTween.destroy();
-				this.scene.start('Title');
-			}
-		});
+		this.madeByText.setY(1100);
+		this.menuButton.setY(1250);
 	}
 }
 
