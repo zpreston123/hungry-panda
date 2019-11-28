@@ -86,24 +86,24 @@ class PreloaderScene extends Phaser.Scene {
 
 		// load assets needed in our game
 		this.load.audio('bgMusic', BackgroundMusic);
-        this.load.audio('bomb-sound', BombSound);
-        this.load.audio('clear-sound', ClearSound);
+		this.load.audio('bomb-sound', BombSound);
+		this.load.audio('clear-sound', ClearSound);
 		this.load.audio('fruit-sound', FruitSound);
-        this.load.audio('game-over-sound', GameOverSound);
+		this.load.audio('game-over-sound', GameOverSound);
 		this.load.image('background', JungleBackground);
 		this.load.image('blueButton1', Button01);
 		this.load.image('blueButton2', Button02);
-        this.load.image('bomb', BombSprite);
+		this.load.image('bomb', BombSprite);
 		this.load.image('box', Checkbox);
 		this.load.image('checkedBox', Checkedbox);
 		this.load.image('clear-image', ClearImage);
-        this.load.image('game-over', GameOverImage);
-        this.load.image('start', StartImage);
-        this.load.image('title', Title);
-        this.load.plugin('virtualjoystick-plugin', VirtualJoyStickPlugin, true);
-        this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
+		this.load.image('game-over', GameOverImage);
+		this.load.image('start', StartImage);
+		this.load.image('title', Title);
+		this.load.plugin('virtualjoystick-plugin', VirtualJoyStickPlugin, true);
+		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
+		this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
+		this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
 	}
 }
 
