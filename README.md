@@ -11,8 +11,8 @@ To collect as many fruit as you (the panda) can before time runs out.  Watch out
 -5 pts / bomb hit
 
 ### Health System
-Level 1:  2 lives
-Level 2:  3 lives
-Level 3:  4 lives
+Level 1:  2 lives<br>
+Level 2:  3 lives<br>
+Level 3:  4 lives<br>
 
 -1 life / bomb hit
