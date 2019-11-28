@@ -26,13 +26,13 @@ class PreloaderScene extends Phaser.Scene {
 		var progressBar = this.add.graphics();
 		var progressBox = this.add.graphics();
 		progressBox.fillStyle(0x222222, 0.8);
-		progressBox.fillRect((config.width / 4), 270, 320, 50);
+		progressBox.fillRect(this.cameras.main.centerX - 250, this.cameras.main.centerY - 30, 500, 50);
 
 		var width = this.cameras.main.width;
 		var height = this.cameras.main.height;
 		var loadingText = this.make.text({
 			x: width / 2,
-			y: height / 2 - 100,
+			y: height / 2 - 90,
 			text: 'Loading...',
 			style: {
 				font: '20px monospace',
@@ -57,7 +57,7 @@ class PreloaderScene extends Phaser.Scene {
 			percentText.setText(parseInt(value * 100) + '%');
 			progressBar.clear();
 			progressBar.fillStyle(0xffffff, 1);
-			progressBar.fillRect(310, 280, 300 * value, 30);
+			progressBar.fillRect(this.cameras.main.centerX - 245, this.cameras.main.centerY - 22, 490 * value, 35);
 		});
 
 		// remove progress bar when complete
@@ -69,7 +69,7 @@ class PreloaderScene extends Phaser.Scene {
 			this.scene.start('Title');
 		});
 
-		// load assets needed in our game
+		// load assets needed in the game
 		this.load.audio('bgMusic', BackgroundMusic);
 		this.load.audio('bomb-sound', BombSound);
 		this.load.audio('clear-sound', ClearSound);
