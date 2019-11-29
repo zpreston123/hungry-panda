@@ -6,16 +6,11 @@ import {
 	ClearImage, StartImage, GameOverImage
 } from '../assets/images';
 import { BackgroundMusic, BombSound, FruitSound, ClearSound, GameOverSound } from '../assets/audio';
-import { Explosion, Player } from '../sprites';
 import VirtualJoyStickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 class PreloaderScene extends Phaser.Scene {
 	constructor() {
 		super('Preloader');
-	}
-
-	init() {
-		this.readyCount = 0;
 	}
 
 	preload() {
@@ -26,13 +21,11 @@ class PreloaderScene extends Phaser.Scene {
 		var progressBar = this.add.graphics();
 		var progressBox = this.add.graphics();
 		progressBox.fillStyle(Phaser.Display.Color.GetColor(41, 108, 146), 0.5);
-		progressBox.fillRect(this.cameras.main.centerX - 250, this.cameras.main.centerY - 30, 500, 50);
+		progressBox.fillRect(config.width / 2 - 250, config.height / 2 - 30, 500, 50);
 
-		var width = this.cameras.main.width;
-		var height = this.cameras.main.height;
 		var loadingText = this.make.text({
-			x: width / 2,
-			y: height / 2 - 90,
+			x: config.width / 2,
+			y: config.height / 2 - 90,
 			text: 'Loading...',
 			style: {
 				font: '20px monospace',
@@ -42,8 +35,8 @@ class PreloaderScene extends Phaser.Scene {
 		loadingText.setOrigin(0.5, 0.5);
 
 		var percentText = this.make.text({
-			x: width / 2,
-			y: height / 2 - 5,
+			x: config.width / 2,
+			y: config.height / 2 - 5,
 			text: '0%',
 			style: {
 				font: '18px monospace',
@@ -57,7 +50,7 @@ class PreloaderScene extends Phaser.Scene {
 			percentText.setText(parseInt(value * 100) + '%');
 			progressBar.clear();
 			progressBar.fillStyle(Phaser.Display.Color.GetColor(175, 234, 220), 0.8);
-			progressBar.fillRect(this.cameras.main.centerX - 245, this.cameras.main.centerY - 22, 490 * value, 35);
+			progressBar.fillRect(config.width / 2 - 245, config.height / 2 - 22, 490 * value, 35);
 		});
 
 		// remove progress bar when complete
