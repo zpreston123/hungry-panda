@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import levels from '../config/levels';
 
 class StartScene extends Phaser.Scene {
     constructor() {
@@ -6,8 +7,8 @@ class StartScene extends Phaser.Scene {
     }
 
     init(data) {
-        this.level = data.level;
-        this.levels = data.levels;
+        this.level = data.level || levels[0];
+        this.levels = data.levels || levels;
     }
 
     create() {

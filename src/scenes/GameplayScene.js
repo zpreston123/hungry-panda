@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import config from '../config/game';
+import { Explosion, Player } from '../sprites';
 import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
 
