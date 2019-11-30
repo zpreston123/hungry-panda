@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class HealthLabel extends Phaser.GameObjects.Text {
 	constructor(config) {

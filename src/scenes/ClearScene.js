@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class ClearScene extends Phaser.Scene {
     constructor() {

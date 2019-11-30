@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class GameOverScene extends Phaser.Scene {
     constructor() {

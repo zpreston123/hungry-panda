@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class Explosion extends Phaser.Physics.Arcade.Sprite {
     constructor(config) {

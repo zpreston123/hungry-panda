@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 import Button from '../Objects/Button';
 import config from '../config/game';
 

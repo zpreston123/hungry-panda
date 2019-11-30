@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class BombGroup extends Phaser.Physics.Arcade.Group {
     constructor(config) {

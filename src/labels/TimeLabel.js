@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class TimeLabel extends Phaser.GameObjects.Text {
 	constructor(config) {
