@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 import { config } from './config';
 import { BootScene, PreloaderScene, TitleScene, CreditsScene, ClearScene, GameOverScene, GameplayScene, StartScene } from './scenes';
 

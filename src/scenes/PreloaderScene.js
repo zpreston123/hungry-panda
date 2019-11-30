@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 import config from '../config/game';
 import {
 	Title, JungleBackground, Logo, Checkbox, Checkedbox, Button01, Button02,

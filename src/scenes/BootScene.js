@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 import { Logo } from '../assets/images';
 
 class BootScene extends Phaser.Scene {

@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 
 class FruitGroup extends Phaser.Physics.Arcade.Group {
     constructor(config) {

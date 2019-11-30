@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 import config from '../config/game';
 import { Explosion, Player } from '../sprites';
 import { BombGroup, FruitGroup } from '../groups';

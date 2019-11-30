@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import 'phaser';
 import levels from '../config/levels';
 
 class StartScene extends Phaser.Scene {
