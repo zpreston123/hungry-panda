@@ -63,7 +63,6 @@ class PreloaderScene extends Phaser.Scene {
 		});
 
 		// load assets needed in the game
-		this.load.audio('bgMusic', BackgroundMusic);
 		this.load.audio('bomb-sound', BombSound);
 		this.load.audio('clear-sound', ClearSound);
 		this.load.audio('fruit-sound', FruitSound);
