@@ -20,7 +20,7 @@ class TitleScene extends Phaser.Scene {
 		let title = this.add.image(this.cameras.main.width/2, this.cameras.main.height/2 - 180, 'title');
 
 		// Game
-		this.gameButton = new Button(this, config.width/2, config.height/2 - 80, 'blueButton1', 'blueButton2', 'Play', 'Start');
+		this.gameButton = new Button(this, config.width/2, config.height/2 - 30, 'blueButton1', 'blueButton2', 'Play', 'Start');
 
 		// Credits
 		this.creditsButton = new Button(this, config.width/2, config.height/2 + 80, 'blueButton1', 'blueButton2', 'Credits', 'Credits');
