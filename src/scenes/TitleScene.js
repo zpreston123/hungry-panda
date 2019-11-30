@@ -8,13 +8,6 @@ class TitleScene extends Phaser.Scene {
 	}
 
 	create() {
-		// Background
-		this.background = this.add.image(config.width / 2, config.height / 2, 'background');
-		let scaleX = config.width / this.background.width;
-		let scaleY = config.height / this.background.height;
-		let scale = Math.max(scaleX, scaleY);
-		this.background.setScale(scale).setScrollFactor(0);
-
 		// Title
 		this.add.image(config.width / 2, config.height / 2 - 180, 'title');
 
