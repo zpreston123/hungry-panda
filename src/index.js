@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { config, levels } from './config';
+import { config } from './config';
 import { BootScene, PreloaderScene, TitleScene, CreditsScene, ClearScene, GameOverScene, GameplayScene, StartScene } from './scenes';
 
 class Game extends Phaser.Game {
