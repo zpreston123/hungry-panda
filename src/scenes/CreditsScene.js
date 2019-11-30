@@ -23,17 +23,23 @@ class CreditsScene extends Phaser.Scene {
 
 		Phaser.Display.Align.In.Center(
 			this.creditsText,
-			this.zone
+			this.zone,
+			0,
+			-30
 		);
 
 		Phaser.Display.Align.In.Center(
 			this.madeByText,
-			this.zone
+			this.zone,
+			0,
+			35
 		);
 
 		Phaser.Display.Align.In.Center(
 			this.menuButton,
-			this.zone
+			this.zone,
+			0,
+			110
 		);
 
 		this.madeByText.setY(1100);
