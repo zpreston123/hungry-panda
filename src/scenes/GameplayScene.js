@@ -116,7 +116,7 @@ class GameplayScene extends Phaser.Scene {
             this.playerBombCollider.active = true;
         }
 
-        if (this.time == 0 || this.health == 0) {
+        if (this.gameTime == 0 || this.health == 0) {
             this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
         }
 
