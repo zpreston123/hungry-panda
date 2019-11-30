@@ -1,6 +1,4 @@
 import Phaser from 'phaser';
-import ClearImage from '../assets/images/clear.png';
-import ClearSound from '../assets/sounds/se6.wav';
 
 class ClearScene extends Phaser.Scene {
     constructor() {
@@ -12,11 +10,6 @@ class ClearScene extends Phaser.Scene {
         this.highScore = data.highScore;
         this.levels = data.levels;
         this.nextLevel = data.nextLevel;
-    }
-
-    preload() {
-        this.load.image('clear-image', ClearImage);
-        this.load.audio('clear-sound', ClearSound);
     }
 
     create() {

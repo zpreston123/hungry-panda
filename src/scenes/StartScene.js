@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import StartImage from '../assets/images/start.png';
+import levels from '../config/levels';
 
 class StartScene extends Phaser.Scene {
     constructor() {
@@ -7,12 +7,8 @@ class StartScene extends Phaser.Scene {
     }
 
     init(data) {
-        this.level = data.level;
-        this.levels = data.levels;
-    }
-
-    preload() {
-        this.load.image('start', StartImage);
+        this.level = data.level || levels[0];
+        this.levels = data.levels || levels;
     }
 
     create() {
