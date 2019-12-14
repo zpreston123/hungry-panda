@@ -1,7 +1,7 @@
 import 'phaser';
 import config from '../config/game';
 import {
-	Title, JungleBackground, Logo, Checkbox, Checkedbox, Button01, Button02,
+	Title, Logo, Checkbox, Checkedbox, Button01, Button02,
 	ExplosionSpritesheet, BombSprite, FruitAndVegSpritesheet, PlayerSpritesheet,
 	ClearImage, StartImage, GameOverImage
 } from '../assets/images';
@@ -67,7 +67,6 @@ class PreloaderScene extends Phaser.Scene {
 		this.load.audio('clear-sound', ClearSound);
 		this.load.audio('fruit-sound', FruitSound);
 		this.load.audio('game-over-sound', GameOverSound);
-		this.load.image('background', JungleBackground);
 		this.load.image('blueButton1', Button01);
 		this.load.image('blueButton2', Button02);
 		this.load.image('bomb', BombSprite);
