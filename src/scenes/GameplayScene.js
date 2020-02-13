@@ -71,6 +71,12 @@ class GameplayScene extends Phaser.Scene {
         if (this.levels.indexOf(this.level) > 0) { // levels 2 and 3
             this.player.setAlpha(0);
             this.tweens.add({ targets: this.player, alpha: 1, duration: 3000 });
+            this.physics.add.collider(this.fruitGroup, this.fruitGroup);
+            this.physics.add.collider(this.bombGroup, this.bombGroup);
+
+            if (this.levels.indexOf(this.level) === 2) { // level 3
+                this.physics.add.collider(this.fruitGroup, this.bombGroup);
+            }
         }
 
         // detect collision between the player and fruit

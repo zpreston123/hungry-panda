@@ -6,7 +6,7 @@ class Explosion extends Phaser.Physics.Arcade.Sprite {
         config.scene.anims.create({
             key: 'explode',
             frames: config.scene.anims.generateFrameNumbers('explosion'),
-            frameRate: 20,
+            frameRate: 35,
             repeat: 0,
             hideOnComplete: true
         });
