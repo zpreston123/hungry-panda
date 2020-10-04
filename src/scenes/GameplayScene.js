@@ -9,9 +9,9 @@ class GameplayScene extends Phaser.Scene {
         super('Gameplay');
     }
 
-    init(data) {
-        this.levels = data.levels;
-        this.level = data.level;
+    init({ levels, level }) {
+        this.levels = levels;
+        this.level = level;
     }
 
     create() {
@@ -23,31 +23,15 @@ class GameplayScene extends Phaser.Scene {
 
         this.physics.world.setBounds(0, 130, config.width, config.height - 130);
 
-        this.scoreLabel = new ScoreLabel({
-            scene: this,
-            x: 16,
-            y: 16,
-            text: `Score: ${this.score}`,
-            style: { fontSize: '32px', fill: '#fff' }
-        });
+        this.scoreLabel = new ScoreLabel(this, 16, 16, this.score, { fontSize: '32px', fill: '#fff' });
+        this.timeLabel = new TimeLabel(this, 16, 50, this.gameTime, { fontSize: '32px', fill: '#fff' });
+        this.healthLabel = new HealthLabel(this, 610, 16, this.health, { fontSize: '32px', fill: '#fff'});
 
-        this.timeLabel = new TimeLabel({
-            scene: this,
-            x: 16,
-            y: 50,
-            text: `Time: ${this.gameTime}`,
-            style: { fontSize: '32px', fill: '#fff' }
-        });
+        this.add.existing(this.scoreLabel);
+        this.add.existing(this.timeLabel);
+        this.add.existing(this.healthLabel);
 
-        this.time.addEvent({ delay: 1000, callback: this.decreaseTime, callbackScope: this, loop: true });
-
-        this.healthLabel = new HealthLabel({
-            scene: this,
-            x: 610,
-            y: 16,
-            text: `Health: ${this.health}`,
-            style: { fontSize: '32px', fill: '#fff'}
-        });
+        this.timer = this.time.addEvent({ delay: 1000, callback: this.decreaseTime, callbackScope: this, loop: true });
 
         this.fruitGroup = new FruitGroup({
             world: this.physics.world,
@@ -81,15 +65,15 @@ class GameplayScene extends Phaser.Scene {
 
         // detect collision between the player and fruit
         this.playerFruitCollider = this.physics.add.collider(this.player, this.fruitGroup, (player, fruit) => {
-            this.increaseScore();
+            this.scoreLabel.add(10);
             this.sound.add('fruit-sound').play();
             fruit.destroy();
         }, null, this);
 
         // detect collision between the player and bomb
         this.playerBombCollider = this.physics.add.collider(this.player, this.bombGroup, (player, bomb) => {
-            this.decreaseHealth();
-            this.decreaseScore();
+            this.healthLabel.subtract();
+            this.scoreLabel.subtract(5);
             this.hurtPlayer();
             this.sound.add('bomb-sound').play();
             const explosion = new Explosion({ scene: this, x: bomb.x, y: bomb.y });
@@ -110,8 +94,8 @@ class GameplayScene extends Phaser.Scene {
     }
 
     update() {
-        if ((localStorage.getItem('highScore') === null) || (this.score > localStorage.getItem('highScore'))) {
-            localStorage.setItem('highScore', this.score);
+        if ((localStorage.getItem('highScore') === null) || (this.scoreLabel.score > localStorage.getItem('highScore'))) {
+            localStorage.setItem('highScore', this.scoreLabel.score);
         }
 
         if (this.tweens.isTweening(this.player)) {
@@ -122,16 +106,17 @@ class GameplayScene extends Phaser.Scene {
             this.playerBombCollider.active = true;
         }
 
-        if (this.gameTime == 0 || this.health == 0) {
+        if (this.gameTime === 0 || this.healthLabel.health === 0) {
+            this.timer.remove();
             this.scene.start('Game Over', { levels: this.levels, firstLevel: this.levels[0] });
         }
 
-        if (this.score < 0) {
-            this.resetScore();
+        if (this.scoreLabel.score < 0) {
+            this.scoreLabel.reset();
         }
 
-        if (this.fruitGroup.getLength() == 0) {
-            this.scene.start('Clear', { score: this.score, highScore: localStorage.getItem('highScore'), nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
+        if (this.fruitGroup.getLength() === 0) {
+            this.scene.start('Clear', { score: this.scoreLabel.score, highScore: localStorage.getItem('highScore'), nextLevel: this.levels[this.levels.indexOf(this.level) + 1], levels: this.levels });
         }
 
         this.player.setVelocity(0);
@@ -162,30 +147,9 @@ class GameplayScene extends Phaser.Scene {
             this.player.clearTint();
         }, callbackScope: this });
     }
-
-    increaseScore() {
-        this.score += 10;
-        this.scoreLabel.text = `Score: ${this.score}`;
-    }
-
     decreaseTime() {
         this.gameTime--;
         this.timeLabel.text = `Time: ${this.gameTime}`;
-    }
-
-    decreaseHealth() {
-        this.health--;
-        this.healthLabel.text = `Health: ${this.health}`;
-    }
-
-    decreaseScore() {
-        this.score -= 5;
-        this.scoreLabel.text = `Score: ${this.score}`;
-    }
-
-    resetScore() {
-        this.score = 0;
-        this.scoreLabel.text = `Score: ${this.score}`;
     }
 }
 

@@ -1,10 +1,34 @@
 import 'phaser';
 
+const formatScore = (score) => `Score: ${score}`;
+
 class ScoreLabel extends Phaser.GameObjects.Text {
-	constructor(config) {
-		super(config.scene, config.x, config.y, config.text, config.style);
-		config.scene.add.existing(this);
+	constructor(scene, x, y, score, style) {
+		super(scene, x, y, formatScore(score), style);
+
+		this.score = score;
 	}
+
+	setScore(score) {
+		this.score = score;
+		this.updateScoreText();
+	}
+
+	add(points) {
+		this.setScore(this.score + points);
+    }
+
+    subtract(points) {
+    	this.setScore(this.score - points);
+    }
+
+    reset() {
+    	this.setScore(0);
+    }
+
+    updateScoreText() {
+		this.setText(formatScore(this.score));
+    }
 }
 
 export default ScoreLabel;
