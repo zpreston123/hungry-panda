@@ -1,11 +1,7 @@
 import 'phaser';
 import config from '../config/game';
-import {
-	Title, Logo, Checkbox, Checkedbox, Button01, Button02,
-	ExplosionSpritesheet, BombSprite, FruitAndVegSpritesheet, PlayerSpritesheet,
-	ClearImage, StartImage, GameOverImage
-} from '../assets/images';
-import { BackgroundMusic, BombSound, FruitSound, ClearSound, GameOverSound } from '../assets/audio';
+import * as Images from '../assets/images';
+import * as Audio from '../assets/audio';
 import VirtualJoyStickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 class PreloaderScene extends Phaser.Scene {
@@ -63,23 +59,23 @@ class PreloaderScene extends Phaser.Scene {
 		});
 
 		// load assets needed in the game
-		this.load.audio('bomb-sound', BombSound);
-		this.load.audio('clear-sound', ClearSound);
-		this.load.audio('fruit-sound', FruitSound);
-		this.load.audio('game-over-sound', GameOverSound);
-		this.load.image('blueButton1', Button01);
-		this.load.image('blueButton2', Button02);
-		this.load.image('bomb', BombSprite);
-		this.load.image('box', Checkbox);
-		this.load.image('checkedBox', Checkedbox);
-		this.load.image('clear-image', ClearImage);
-		this.load.image('game-over', GameOverImage);
-		this.load.image('start', StartImage);
-		this.load.image('title', Title);
+		this.load.audio('bomb-sound', Audio.BombSound);
+		this.load.audio('clear-sound', Audio.ClearSound);
+		this.load.audio('fruit-sound', Audio.FruitSound);
+		this.load.audio('game-over-sound', Audio.GameOverSound);
+		this.load.image('blueButton1', Images.Button01);
+		this.load.image('blueButton2', Images.Button02);
+		this.load.image('bomb', Images.BombSprite);
+		this.load.image('box', Images.Checkbox);
+		this.load.image('checkedBox', Images.Checkedbox);
+		this.load.image('clear-image', Images.ClearImage);
+		this.load.image('game-over', Images.GameOverImage);
+		this.load.image('start', Images.StartImage);
+		this.load.image('title', Images.Title);
 		this.load.plugin('virtualjoystick-plugin', VirtualJoyStickPlugin, true);
-		this.load.spritesheet('explosion', ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
-		this.load.spritesheet('fruitandveg', FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
-		this.load.spritesheet('player', PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
+		this.load.spritesheet('explosion', Images.ExplosionSpritesheet, { frameWidth: 64, frameHeight: 64 });
+		this.load.spritesheet('fruitandveg', Images.FruitAndVegSpritesheet, { frameWidth: 64, frameHeight: 64 });
+		this.load.spritesheet('player', Images.PlayerSpritesheet, { frameWidth: 32, frameHeight: 32});
 	}
 }
 
