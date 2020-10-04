@@ -13,26 +13,9 @@ class CreditsScene extends Phaser.Scene {
 		this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 		this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
-		Phaser.Display.Align.In.Center(
-			this.creditsText,
-			this.zone,
-			0,
-			-30
-		);
-
-		Phaser.Display.Align.In.Center(
-			this.madeByText,
-			this.zone,
-			0,
-			35
-		);
-
-		Phaser.Display.Align.In.Center(
-			this.menuButton,
-			this.zone,
-			0,
-			110
-		);
+		Phaser.Display.Align.In.Center(this.creditsText, this.zone, 0, -30);
+		Phaser.Display.Align.In.Center(this.madeByText, this.zone, 0, 35);
+		Phaser.Display.Align.In.Center(this.menuButton, this.zone, 0, 110);
 	}
 }
 

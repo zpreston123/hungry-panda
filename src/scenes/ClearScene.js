@@ -5,11 +5,11 @@ class ClearScene extends Phaser.Scene {
         super('Clear');
     }
 
-    init(data) {
-        this.score = data.score;
-        this.highScore = data.highScore;
-        this.levels = data.levels;
-        this.nextLevel = data.nextLevel;
+    init({ score, highScore, levels, nextLevel }) {
+        this.score = score;
+        this.highScore = highScore;
+        this.levels = levels;
+        this.nextLevel = nextLevel;
     }
 
     create() {

@@ -1,9 +1,10 @@
 import 'phaser';
 
+const formatTime = (time) => `Time: ${time}`;
+
 class TimeLabel extends Phaser.GameObjects.Text {
-	constructor(config) {
-		super(config.scene, config.x, config.y, config.text, config.style);
-		config.scene.add.existing(this);
+	constructor(scene, x, y, time, style) {
+		super(scene, x, y, formatTime(time), style);
 	}
 }
 
