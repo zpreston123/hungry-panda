@@ -5,9 +5,9 @@ class GameOverScene extends Phaser.Scene {
         super('Game Over');
     }
 
-    init(data) {
-        this.levels = data.levels;
-        this.firstLevel = data.firstLevel;
+    init({ levels, firstLevel }) {
+        this.levels = levels;
+        this.firstLevel = firstLevel;
     }
 
     create() {
