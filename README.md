@@ -1,4 +1,4 @@
-# Hungry Panda game (WIP)
+# Hungry Panda game
 
 A simple HTML5 game built using phaser.js framework.
 
