@@ -23,13 +23,19 @@ class GameplayScene extends Phaser.Scene {
 
         this.physics.world.setBounds(0, 130, config.width, config.height - 130);
 
-        this.scoreLabel = new ScoreLabel(this, 16, 16, this.score, { fontSize: '32px', fill: '#fff' });
-        this.timeLabel = new TimeLabel(this, 16, 50, this.gameTime, { fontSize: '32px', fill: '#fff' });
-        this.healthLabel = new HealthLabel(this, 610, 16, this.health, { fontSize: '32px', fill: '#fff'});
+        this.scoreLabel = new ScoreLabel(this, 0, 0, this.score, { fontSize: '32px', fill: '#fff' });
+        this.timeLabel = new TimeLabel(this, 0, 0, this.gameTime, { fontSize: '32px', fill: '#fff' });
+        this.healthLabel = new HealthLabel(this, 0, 0, this.health, { fontSize: '32px', fill: '#fff'});
 
         this.add.existing(this.scoreLabel);
         this.add.existing(this.timeLabel);
         this.add.existing(this.healthLabel);
+
+        this.labelZone = this.add.zone(config.width/2, config.height/2, config.width, config.height);
+
+        Phaser.Display.Align.In.TopLeft(this.scoreLabel, this.labelZone);
+        Phaser.Display.Align.In.TopLeft(this.timeLabel, this.labelZone, 0, -30);
+        Phaser.Display.Align.In.TopRight(this.healthLabel, this.labelZone);
 
         this.timer = this.time.addEvent({ delay: 1000, callback: this.decreaseTime, callbackScope: this, loop: true });
 
