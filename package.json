@@ -27,13 +27,13 @@
     "html-webpack-plugin": "^5.3.2",
     "raw-loader": "^4.0.2",
     "terser-webpack-plugin": "^5.1.4",
-    "webpack": "^5.43.0",
+    "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "phaser": "^3.55.2",
-    "phaser3-rex-plugins": "^1.1.56"
+    "phaser3-rex-plugins": "^1.1.57"
   }
 }
