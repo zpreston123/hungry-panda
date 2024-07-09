@@ -1,8 +1,8 @@
 import 'phaser';
 import config from '../config/game';
-import { Explosion, Player } from '../sprites';
 import { BombGroup, FruitGroup } from '../groups';
 import { HealthLabel, ScoreLabel, TimeLabel } from '../labels';
+import { Explosion, Player } from '../sprites';
 
 class GameplayScene extends Phaser.Scene {
     constructor() {
@@ -25,13 +25,13 @@ class GameplayScene extends Phaser.Scene {
 
         this.scoreLabel = new ScoreLabel(this, 0, 0, this.score, { fontSize: '32px', fill: '#fff' });
         this.timeLabel = new TimeLabel(this, 0, 0, this.gameTime, { fontSize: '32px', fill: '#fff' });
-        this.healthLabel = new HealthLabel(this, 0, 0, this.health, { fontSize: '32px', fill: '#fff'});
+        this.healthLabel = new HealthLabel(this, 0, 0, this.health, { fontSize: '32px', fill: '#fff' });
 
         this.add.existing(this.scoreLabel);
         this.add.existing(this.timeLabel);
         this.add.existing(this.healthLabel);
 
-        this.labelZone = this.add.zone(config.width/2, config.height/2, config.width, config.height);
+        this.labelZone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
         Phaser.Display.Align.In.TopLeft(this.scoreLabel, this.labelZone);
         Phaser.Display.Align.In.TopLeft(this.timeLabel, this.labelZone, 0, -30);
@@ -149,9 +149,11 @@ class GameplayScene extends Phaser.Scene {
 
     hurtPlayer() {
         this.player.setTint(0xff0000);
-        this.time.addEvent({ delay: 250, callback: event => {
-            this.player.clearTint();
-        }, callbackScope: this });
+        this.time.addEvent({
+            delay: 250, callback: event => {
+                this.player.clearTint();
+            }, callbackScope: this
+        });
     }
     decreaseTime() {
         this.gameTime--;
