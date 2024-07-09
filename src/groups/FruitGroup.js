@@ -10,8 +10,8 @@ class FruitGroup extends Phaser.Physics.Arcade.Group {
         });
         this.children.iterate(fruit => {
             fruit.setPosition(
-                Phaser.Math.Between(20, config.x-300),
-                Phaser.Math.Between(100, config.y-230)
+                Phaser.Math.Between(20, config.x - 300),
+                Phaser.Math.Between(100, config.y - 230)
             );
             fruit.setCollideWorldBounds(true);
             if (config.bounce) {

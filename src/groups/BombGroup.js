@@ -9,8 +9,8 @@ class BombGroup extends Phaser.Physics.Arcade.Group {
         });
         this.children.iterate(bomb => {
             bomb.setPosition(
-                Phaser.Math.Between(20, config.x-300),
-                Phaser.Math.Between(100, config.y-230)
+                Phaser.Math.Between(20, config.x - 300),
+                Phaser.Math.Between(100, config.y - 230)
             );
             bomb.setScale(1.5);
             bomb.setCollideWorldBounds(true);
